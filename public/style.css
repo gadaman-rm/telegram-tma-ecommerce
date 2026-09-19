@@ -33,7 +33,6 @@ h1 {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  padding-bottom: 80px; /* Space above sticky Telegram bottom button */
 }
 
 .product-card {
@@ -61,35 +60,15 @@ h1 {
   font-size: 0.95rem;
 }
 
+.product-description {
+  color: var(--text-color);
+  font-size: 0.9rem;
+  line-height: 1.4;
+  margin-top: 6px;
+}
+
 .product-price {
   color: var(--hint-color);
   font-size: 0.85rem;
   margin-top: 4px;
-}
-
-.counter-controls {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.counter-btn {
-  background-color: var(--button-color);
-  color: var(--button-text-color);
-  border: none;
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  font-weight: bold;
-  font-size: 1rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.counter-val {
-  min-width: 16px;
-  text-align: center;
-  font-weight: 600;
 }
