@@ -1,8 +1,8 @@
 // Product dataset
 const PRODUCTS = [
-    { id: "1", name: "Premium Coffee Beans", description: "Rich, smooth arabica beans with notes of chocolate and toasted nuts.", price: 14.99, image: "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=150&q=80" },
-    { id: "2", name: "Pour-over Glass Dripper", description: "A clear glass dripper for a balanced brew and precise pour-over control.", price: 29.50, image: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=150&q=80" },
-    { id: "3", name: "Double-walled Mug", description: "An insulated glass mug that keeps coffee warm while staying comfortable to hold.", price: 18.00, image: "https://images.unsplash.com/photo-1517256064527-09c73fc73e38?w=150&q=80" }
+    { id: "1", name: "Premium Coffee Beans", description: "Rich, smooth arabica beans with notes of chocolate and toasted nuts.", price: 14.99, image: "/images/coffee-beans.jpg" },
+    { id: "2", name: "Pour-over Glass Dripper", description: "A clear glass dripper for a balanced brew and precise pour-over control.", price: 29.50, image: "/images/glass-dripper.jpg" },
+    { id: "3", name: "Double-walled Mug", description: "An insulated glass mug that keeps coffee warm while staying comfortable to hold.", price: 18.00, image: "/images/double-walled-mug.jpg" }
 ];
 
 function renderProducts() {
