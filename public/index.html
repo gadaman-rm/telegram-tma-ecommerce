@@ -11,7 +11,18 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <h1>Product Descriptions</h1>
+    <div class="toolbar">
+      <h1 id="page-title">Product Descriptions</h1>
+      <label class="language-picker" for="language-select">
+        <select id="language-select" aria-label="Select language">
+          <option value="en">English</option>
+          <option value="es">Español</option>
+          <option value="fa">فارسی</option>
+          <option value="zh">中文</option>
+        </select>
+      </label>
+    </div>
+
     <div id="catalog" class="catalog"></div>
 
     <script src="app.js"></script>

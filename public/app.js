@@ -1,30 +1,83 @@
-// Product dataset
-const PRODUCTS = [
-    { id: "1", name: "Premium Coffee Beans", description: "Rich, smooth arabica beans with notes of chocolate and toasted nuts.", price: 14.99, image: "/images/coffee-beans.jpg" },
-    { id: "2", name: "Pour-over Glass Dripper", description: "A clear glass dripper for a balanced brew and precise pour-over control.", price: 29.50, image: "/images/glass-dripper.jpg" },
-    { id: "3", name: "Double-walled Mug", description: "An insulated glass mug that keeps coffee warm while staying comfortable to hold.", price: 18.00, image: "/images/double-walled-mug.jpg" }
-];
+const state = {
+  language: "en",
+  data: null,
+};
 
-function renderProducts() {
-    const container = document.getElementById("catalog");
-    container.innerHTML = "";
+async function loadContent() {
+  const response = await fetch("/content.json");
+  if (!response.ok) {
+    throw new Error("Failed to load content.json");
+  }
 
-    PRODUCTS.forEach((product) => {
-        const card = document.createElement("div");
-        card.className = "product-card";
-        card.innerHTML = `
-      <img src="${product.image}" alt="${product.name}" />
-      <div class="product-info">
-        <div class="product-title">${product.name}</div>
-        <div class="product-description">${product.description}</div>
-        <div class="product-price">$${product.price.toFixed(2)}</div>
-      </div>
-    `;
-        container.appendChild(card);
-    });
+  state.data = await response.json();
+  populateLanguageSelector();
+  updateLanguageUI();
+  renderProducts();
 }
 
-// Initialize on page load
+function populateLanguageSelector() {
+  const languageSelect = document.getElementById("language-select");
+  languageSelect.innerHTML = "";
+
+  state.data.languages.forEach((lang) => {
+    const option = document.createElement("option");
+    option.value = lang.code;
+    option.textContent = lang.label;
+    languageSelect.appendChild(option);
+  });
+
+  languageSelect.value = state.language;
+}
+
+function renderProducts() {
+  const container = document.getElementById("catalog");
+  const currentText = state.data.ui[state.language];
+  container.innerHTML = "";
+
+  state.data.products.forEach((product) => {
+    const card = document.createElement("div");
+    card.className = "product-card";
+    card.innerHTML = `
+      <img src="${product.image}" alt="${product.name[state.language]}" />
+      <div class="product-info">
+        <div class="product-title">${product.name[state.language]}</div>
+        <div class="product-description">${product.description[state.language]}</div>
+        <div class="product-price">${currentText.currency}${Number(product.price).toFixed(2)}</div>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function updateLanguageUI() {
+  const pageTitle = document.getElementById("page-title");
+  const languageSelect = document.getElementById("language-select");
+  const currentText = state.data.ui[state.language];
+  const languageConfig = state.data.languages.find((lang) => lang.code === state.language);
+  const isRtl = languageConfig?.dir === "rtl";
+
+  pageTitle.textContent = currentText.pageTitle;
+  languageSelect.value = state.language;
+
+  document.documentElement.lang = state.language;
+  document.documentElement.dir = isRtl ? "rtl" : "ltr";
+  document.documentElement.setAttribute("dir", isRtl ? "rtl" : "ltr");
+  document.body.dir = isRtl ? "rtl" : "ltr";
+  document.body.setAttribute("dir", isRtl ? "rtl" : "ltr");
+  document.body.classList.toggle("rtl", isRtl);
+  document.body.classList.toggle("ltr", !isRtl);
+}
+
 window.addEventListener("DOMContentLoaded", () => {
+  const languageSelect = document.getElementById("language-select");
+
+  languageSelect.addEventListener("change", (event) => {
+    state.language = event.target.value;
+    updateLanguageUI();
     renderProducts();
+  });
+
+  loadContent().catch((error) => {
+    console.error(error);
+  });
 });
