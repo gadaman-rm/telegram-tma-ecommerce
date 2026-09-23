@@ -1,83 +1,80 @@
 {
   "languages": [
-    { "code": "en", "label": "English", "dir": "ltr" },
-    { "code": "es", "label": "Español", "dir": "ltr" },
-    { "code": "fa", "label": "فارسی", "dir": "rtl" },
-    { "code": "zh", "label": "中文", "dir": "ltr" }
+    {
+      "code": "en",
+      "label": "English",
+      "dir": "ltr"
+    },
+    {
+      "code": "fa",
+      "label": "فارسی",
+      "dir": "rtl"
+    }
   ],
   "ui": {
     "en": {
       "pageTitle": "Product Descriptions",
       "languageLabel": "Language",
-      "currency": "$"
-    },
-    "es": {
-      "pageTitle": "Descripciones de productos",
-      "languageLabel": "Idioma",
-      "currency": "$"
+      "currency": "$",
+      "currencyPosition": "prefix",
+      "fractionDigits": 2
     },
     "fa": {
       "pageTitle": "توضیحات محصول",
       "languageLabel": "زبان",
-      "currency": "﷼"
-    },
-    "zh": {
-      "pageTitle": "产品介绍",
-      "languageLabel": "语言",
-      "currency": "¥"
+      "currency": "تومان",
+      "currencyPosition": "suffix",
+      "fractionDigits": 0
     }
   },
   "products": [
     {
       "id": "1",
-      "image": "/images/coffee-beans.jpg",
+      "image": "/images/I_SOCKET_1_800_800.jpg",
       "name": {
         "en": "Premium Coffee Beans",
-        "es": "Granos de café premium",
-        "fa": "دانه‌های قهوه Premium",
-        "zh": "优质咖啡豆"
+        "fa": "دانه‌های قهوه Premium"
       },
       "description": {
         "en": "Rich, smooth arabica beans with notes of chocolate and toasted nuts.",
-        "es": "Granos de arábica ricos y suaves con notas a chocolate y nueces tostadas.",
-        "fa": "دانه‌های عربیکا با طعم غنی و نرم با نت‌های شکلات و مغزهای برشته.",
-        "zh": "丰富顺滑的阿拉比卡咖啡豆，带有巧克力和烘烤坚果的香气。"
+        "fa": "دانه‌های عربیکا با طعم غنی و نرم با نت‌های شکلات و مغزهای برشته."
       },
-      "price": 14.99
+      "price": {
+        "en": 14.99,
+        "fa": 600000
+      }
     },
     {
       "id": "2",
       "image": "/images/glass-dripper.jpg",
       "name": {
         "en": "Pour-over Glass Dripper",
-        "es": "Filtro de vidrio para goteo",
-        "fa": "قوری شیشه‌ای Pour-over",
-        "zh": "手冲玻璃滤杯"
+        "fa": "قوری شیشه‌ای Pour-over"
       },
       "description": {
         "en": "A clear glass dripper for a balanced brew and precise pour-over control.",
-        "es": "Un filtro de vidrio transparente para una preparación equilibrada y un control preciso del goteo.",
-        "fa": "قوری شیشه‌ای شفاف برای دم‌آوری متعادل و کنترل دقیق در فرایند Pour-over.",
-        "zh": "透明玻璃滤杯，适合平衡冲泡并精确控制手冲过程。"
+        "fa": "قوری شیشه‌ای شفاف برای دم‌آوری متعادل و کنترل دقیق در فرایند Pour-over."
       },
-      "price": 29.5
+      "price": {
+        "en": 29.5,
+        "fa": 1200000
+      }
     },
     {
       "id": "3",
       "image": "/images/double-walled-mug.jpg",
       "name": {
         "en": "Double-walled Mug",
-        "es": "Taza de doble pared",
-        "fa": "لیوان دو جداره",
-        "zh": "双层杯"
+        "fa": "لیوان دو جداره"
       },
       "description": {
-        "en": "An insulated glass mug that keeps coffee warm while staying comfortable to hold.",
-        "es": "Una taza de vidrio aislada que mantiene el café caliente y resulta cómoda de sostener.",
-        "fa": "لیوان شیشه‌ای عایق که قهوه را گرم نگه می‌دارد و در دست گرفتن آن راحت است.",
-        "zh": "保温玻璃杯，能够保持咖啡温暖，同时握感舒适。"
+        "en": "An insulated glss mug that keeps coffee warm while staying comfortable to hold.",
+        "fa": "لیوان شیشه‌ای عایق که قهوه را گرم نگه می‌دارد و در دست گرفتن آن راحت است."
       },
-      "price": 18
+      "price": {
+        "en": 18,
+        "fa": 750000
+      }
     }
   ]
 }

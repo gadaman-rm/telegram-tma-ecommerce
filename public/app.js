@@ -35,6 +35,16 @@ function renderProducts() {
   container.innerHTML = "";
 
   state.data.products.forEach((product) => {
+    const price = typeof product.price === "object"
+      ? product.price[state.language]
+      : product.price;
+    const formattedPrice = new Intl.NumberFormat(state.language, {
+      minimumFractionDigits: currentText.fractionDigits ?? 2,
+      maximumFractionDigits: currentText.fractionDigits ?? 2,
+    }).format(Number(price));
+    const priceLabel = currentText.currencyPosition === "suffix"
+      ? `${formattedPrice} ${currentText.currency}`
+      : `${currentText.currency}${formattedPrice}`;
     const card = document.createElement("div");
     card.className = "product-card";
     card.innerHTML = `
@@ -42,7 +52,7 @@ function renderProducts() {
       <div class="product-info">
         <div class="product-title">${product.name[state.language]}</div>
         <div class="product-description">${product.description[state.language]}</div>
-        <div class="product-price">${currentText.currency}${Number(product.price).toFixed(2)}</div>
+        <div class="product-price">${priceLabel}</div>
       </div>
     `;
     container.appendChild(card);
