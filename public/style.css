@@ -112,8 +112,8 @@ body.rtl .product-card {
 }
 
 .product-card img {
-  width: 64px;
-  height: 64px;
+  width: var(--product-thumbnail-width, 64px);
+  height: var(--product-thumbnail-height, 64px);
   border-radius: 8px;
   object-fit: cover;
 }

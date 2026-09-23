@@ -38,6 +38,13 @@ function renderProducts() {
     const price = typeof product.price === "object"
       ? product.price[state.language]
       : product.price;
+    const thumbnail = product.thumbnail ?? state.data.productCard?.thumbnail;
+    const thumbnailWidth = Number(thumbnail?.width);
+    const thumbnailHeight = Number(thumbnail?.height);
+    const thumbnailStyle = Number.isFinite(thumbnailWidth) && thumbnailWidth > 0
+      && Number.isFinite(thumbnailHeight) && thumbnailHeight > 0
+      ? `style="--product-thumbnail-width: ${thumbnailWidth}px; --product-thumbnail-height: ${thumbnailHeight}px;"`
+      : "";
     const formattedPrice = new Intl.NumberFormat(state.language, {
       minimumFractionDigits: currentText.fractionDigits ?? 2,
       maximumFractionDigits: currentText.fractionDigits ?? 2,
@@ -48,7 +55,7 @@ function renderProducts() {
     const card = document.createElement("div");
     card.className = "product-card";
     card.innerHTML = `
-      <img src="${product.image}" alt="${product.name[state.language]}" />
+      <img src="${product.image}" alt="${product.name[state.language]}" ${thumbnailStyle} />
       <div class="product-info">
         <div class="product-title">${product.name[state.language]}</div>
         <div class="product-description">${product.description[state.language]}</div>
