@@ -45,6 +45,14 @@ function renderProducts() {
       && Number.isFinite(thumbnailHeight) && thumbnailHeight > 0
       ? `style="--product-thumbnail-width: ${thumbnailWidth}px; --product-thumbnail-height: ${thumbnailHeight}px;"`
       : "";
+    const cardHeight = Number(state.data.productCard?.height);
+    const cardHeightStyle = Number.isFinite(cardHeight) && cardHeight > 0
+      ? `--product-card-height: ${cardHeight}px;`
+      : "";
+    const descriptionMaxHeight = Number(state.data.productCard?.descriptionMaxHeight);
+    const descriptionMaxHeightStyle = Number.isFinite(descriptionMaxHeight) && descriptionMaxHeight > 0
+      ? `--product-description-max-height: ${descriptionMaxHeight}px;`
+      : "";
     const formattedPrice = new Intl.NumberFormat(state.language, {
       minimumFractionDigits: currentText.fractionDigits ?? 2,
       maximumFractionDigits: currentText.fractionDigits ?? 2,
@@ -54,6 +62,7 @@ function renderProducts() {
       : `${currentText.currency}${formattedPrice}`;
     const card = document.createElement("div");
     card.className = "product-card";
+    card.style.cssText = `${cardHeightStyle}${descriptionMaxHeightStyle}`;
     card.innerHTML = `
       <img src="${product.image}" alt="${product.name[state.language]}" ${thumbnailStyle} />
       <div class="product-info">

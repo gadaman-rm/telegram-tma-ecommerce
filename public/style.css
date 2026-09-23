@@ -99,6 +99,7 @@ body.rtl .language-picker {
 .product-card {
   display: flex;
   align-items: center;
+  min-height: var(--product-card-height, auto);
   background: var(--secondary-bg-color);
   border-radius: 12px;
   padding: 10px;
@@ -141,6 +142,8 @@ body.rtl .product-card .product-info {
   font-size: 0.9rem;
   line-height: 1.4;
   margin-top: 6px;
+  max-height: var(--product-description-max-height, none);
+  overflow-y: auto;
 }
 
 .product-price {
