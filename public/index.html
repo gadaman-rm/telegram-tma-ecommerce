@@ -27,10 +27,16 @@
 
     <div id="gallery-modal" class="gallery-modal" hidden>
       <div class="gallery-dialog" role="dialog" aria-modal="true" aria-labelledby="gallery-counter" tabindex="-1">
-        <button id="gallery-close" class="gallery-control gallery-close" type="button" aria-label="Close gallery">&times;</button>
-        <button id="gallery-previous" class="gallery-control gallery-previous" type="button" aria-label="Previous image">&#8249;</button>
+        <button id="gallery-close" class="gallery-control gallery-close" type="button" aria-label="Close gallery">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
+        </button>
+        <button id="gallery-previous" class="gallery-control gallery-previous" type="button" aria-label="Previous image">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m14 5-7 7 7 7" /></svg>
+        </button>
         <img id="gallery-image" class="gallery-image" alt="" />
-        <button id="gallery-next" class="gallery-control gallery-next" type="button" aria-label="Next image">&#8250;</button>
+        <button id="gallery-next" class="gallery-control gallery-next" type="button" aria-label="Next image">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m10 5 7 7-7 7" /></svg>
+        </button>
         <div id="gallery-counter" class="gallery-counter"></div>
       </div>
     </div>
