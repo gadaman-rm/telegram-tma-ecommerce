@@ -119,6 +119,10 @@ body.rtl .product-card {
   object-fit: cover;
 }
 
+.product-image {
+  cursor: pointer;
+}
+
 body.rtl .product-card img {
   order: 1;
 }
@@ -150,4 +154,91 @@ body.rtl .product-card .product-info {
   color: var(--hint-color);
   font-size: 0.85rem;
   margin-top: 4px;
+}
+
+body.gallery-open {
+  overflow: hidden;
+}
+
+.gallery-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgb(0 0 0 / 75%);
+}
+
+.gallery-modal[hidden] {
+  display: none;
+}
+
+.gallery-dialog {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  width: min(100%, 720px);
+  outline: none;
+}
+
+.gallery-image {
+  display: block;
+  width: 100%;
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.gallery-control {
+  border: 0;
+  border-radius: 50%;
+  background: var(--bg-color);
+  color: var(--text-color);
+  cursor: pointer;
+  font: inherit;
+}
+
+.gallery-previous,
+.gallery-next {
+  width: 40px;
+  height: 40px;
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.gallery-close {
+  position: absolute;
+  top: -48px;
+  inset-inline-end: 0;
+  width: 36px;
+  height: 36px;
+  font-size: 1.5rem;
+}
+
+.gallery-counter {
+  position: absolute;
+  bottom: -28px;
+  inset-inline: 0;
+  color: #ffffff;
+  text-align: center;
+  font-size: 0.85rem;
+}
+
+@media (max-width: 480px) {
+  .gallery-modal {
+    padding: 12px;
+  }
+
+  .gallery-dialog {
+    gap: 6px;
+  }
+
+  .gallery-previous,
+  .gallery-next {
+    width: 34px;
+    height: 34px;
+  }
 }

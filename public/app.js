@@ -1,6 +1,8 @@
 const state = {
   language: "en",
   data: null,
+  galleryImages: [],
+  galleryIndex: 0,
 };
 
 async function loadContent() {
@@ -68,15 +70,52 @@ function renderProducts() {
     card.className = "product-card";
     card.style.cssText = `${cardHeightStyle}${descriptionMaxHeightStyle}`;
     card.innerHTML = `
-      <img src="${product.image}" alt="${product.name[state.language]}" ${thumbnailStyle} />
+      <img class="product-image" src="${product.image}" alt="${product.name[state.language]}" ${thumbnailStyle} />
       <div class="product-info">
         <div class="product-title">${product.name[state.language]}</div>
         <div class="product-description">${product.description[state.language]}</div>
         <div class="product-price">${priceLabel}</div>
       </div>
     `;
+    card.querySelector(".product-image").addEventListener("click", () => openGallery(product));
     container.appendChild(card);
   });
+}
+
+function openGallery(product) {
+  state.galleryImages = Array.isArray(product.gallery) && product.gallery.length > 0
+    ? product.gallery
+    : [product.image];
+  state.galleryIndex = 0;
+  renderGallery(product.name[state.language]);
+  document.getElementById("gallery-modal").hidden = false;
+  document.body.classList.add("gallery-open");
+}
+
+function renderGallery(productName) {
+  const modal = document.getElementById("gallery-modal");
+  const image = document.getElementById("gallery-image");
+  const counter = document.getElementById("gallery-counter");
+  const hasMultipleImages = state.galleryImages.length > 1;
+
+  image.src = state.galleryImages[state.galleryIndex];
+  image.alt = `${productName} ${state.galleryIndex + 1}`;
+  counter.textContent = `${state.galleryIndex + 1} / ${state.galleryImages.length}`;
+  document.getElementById("gallery-previous").hidden = !hasMultipleImages;
+  document.getElementById("gallery-next").hidden = !hasMultipleImages;
+  modal.querySelector(".gallery-dialog").focus();
+}
+
+function closeGallery() {
+  document.getElementById("gallery-modal").hidden = true;
+  document.body.classList.remove("gallery-open");
+}
+
+function moveGallery(step) {
+  if (state.galleryImages.length < 2) return;
+  state.galleryIndex = (state.galleryIndex + step + state.galleryImages.length)
+    % state.galleryImages.length;
+  renderGallery(document.getElementById("gallery-image").alt.replace(/ \d+$/, ""));
 }
 
 function updateLanguageUI() {
@@ -100,6 +139,20 @@ function updateLanguageUI() {
 
 window.addEventListener("DOMContentLoaded", () => {
   const languageSelect = document.getElementById("language-select");
+  const galleryModal = document.getElementById("gallery-modal");
+
+  document.getElementById("gallery-close").addEventListener("click", closeGallery);
+  document.getElementById("gallery-previous").addEventListener("click", () => moveGallery(-1));
+  document.getElementById("gallery-next").addEventListener("click", () => moveGallery(1));
+  galleryModal.addEventListener("click", (event) => {
+    if (event.target === galleryModal) closeGallery();
+  });
+  document.addEventListener("keydown", (event) => {
+    if (galleryModal.hidden) return;
+    if (event.key === "Escape") closeGallery();
+    if (event.key === "ArrowLeft") moveGallery(-1);
+    if (event.key === "ArrowRight") moveGallery(1);
+  });
 
   languageSelect.addEventListener("change", (event) => {
     state.language = event.target.value;
