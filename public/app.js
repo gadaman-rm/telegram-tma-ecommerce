@@ -10,6 +10,10 @@ async function loadContent() {
   }
 
   state.data = await response.json();
+  const configuredLanguage = state.data.defaultLanguage;
+  if (state.data.languages.some((language) => language.code === configuredLanguage)) {
+    state.language = configuredLanguage;
+  }
   populateLanguageSelector();
   updateLanguageUI();
   renderProducts();

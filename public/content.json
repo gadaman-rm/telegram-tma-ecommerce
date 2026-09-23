@@ -11,6 +11,7 @@
       "dir": "rtl"
     }
   ],
+  "defaultLanguage": "fa",
   "ui": {
     "en": {
       "pageTitle": "Product Descriptions",
