@@ -3,6 +3,8 @@ const state = {
   data: null,
   galleryImages: [],
   galleryIndex: 0,
+  galleryTouchStartX: 0,
+  galleryTouchStartY: 0,
 };
 
 async function loadContent() {
@@ -140,10 +142,24 @@ function updateLanguageUI() {
 window.addEventListener("DOMContentLoaded", () => {
   const languageSelect = document.getElementById("language-select");
   const galleryModal = document.getElementById("gallery-modal");
+  const galleryImage = document.getElementById("gallery-image");
 
   document.getElementById("gallery-close").addEventListener("click", closeGallery);
   document.getElementById("gallery-previous").addEventListener("click", () => moveGallery(-1));
   document.getElementById("gallery-next").addEventListener("click", () => moveGallery(1));
+  galleryImage.addEventListener("touchstart", (event) => {
+    const touch = event.changedTouches[0];
+    state.galleryTouchStartX = touch.clientX;
+    state.galleryTouchStartY = touch.clientY;
+  }, { passive: true });
+  galleryImage.addEventListener("touchend", (event) => {
+    const touch = event.changedTouches[0];
+    const deltaX = touch.clientX - state.galleryTouchStartX;
+    const deltaY = touch.clientY - state.galleryTouchStartY;
+
+    if (Math.abs(deltaX) < 40 || Math.abs(deltaX) <= Math.abs(deltaY)) return;
+    moveGallery(deltaX < 0 ? 1 : -1);
+  }, { passive: true });
   galleryModal.addEventListener("click", (event) => {
     if (event.target === galleryModal) closeGallery();
   });

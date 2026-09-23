@@ -191,6 +191,7 @@ body.gallery-open {
   max-height: 80vh;
   object-fit: contain;
   border-radius: 8px;
+  touch-action: pan-y;
 }
 
 .gallery-control {
