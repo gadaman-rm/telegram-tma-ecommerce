@@ -168,7 +168,6 @@ body.gallery-open {
   place-items: center;
   padding: 24px;
   background: rgb(0 0 0 / 75%);
-  direction: ltr;
 }
 
 .gallery-modal[hidden] {
@@ -177,17 +176,23 @@ body.gallery-open {
 
 .gallery-dialog {
   position: relative;
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 12px;
   width: min(100%, 720px);
   outline: none;
 }
 
+.gallery-stage {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
 .gallery-image {
   display: block;
-  width: 100%;
+  width: auto;
+  max-width: 100%;
   max-height: 80vh;
   object-fit: contain;
   border-radius: 8px;
@@ -222,6 +227,7 @@ body.gallery-open {
 .gallery-next {
   width: 40px;
   height: 40px;
+  flex: 0 0 auto;
 }
 
 .gallery-close {
@@ -234,11 +240,53 @@ body.gallery-open {
 
 .gallery-counter {
   position: absolute;
-  bottom: -28px;
-  inset-inline: 0;
+  top: 12px;
+  inset-inline-start: 12px;
+  padding: 5px 9px;
+  border-radius: 20px;
+  background: rgb(0 0 0 / 55%);
   color: #ffffff;
-  text-align: center;
   font-size: 0.85rem;
+}
+
+.gallery-caption {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 64px;
+  padding: 10px 12px;
+  border-radius: 0 0 8px 8px;
+  background: linear-gradient(transparent, rgb(0 0 0 / 82%));
+  color: #ffffff;
+}
+
+.gallery-description {
+  flex: 1;
+  max-height: 4.2em;
+  overflow: hidden;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  text-align: center;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.gallery-caption .gallery-control {
+  background: rgb(255 255 255 / 90%);
+  color: #171717;
+}
+
+body.rtl .gallery-caption {
+  direction: rtl;
+}
+
+body.rtl .gallery-caption svg {
+  transform: scaleX(-1);
 }
 
 @media (max-width: 480px) {
@@ -246,13 +294,14 @@ body.gallery-open {
     padding: 12px;
   }
 
-  .gallery-dialog {
+  .gallery-caption {
     gap: 6px;
+    padding: 8px;
   }
 
   .gallery-previous,
   .gallery-next {
-    width: 34px;
-    height: 34px;
+    width: 36px;
+    height: 36px;
   }
 }

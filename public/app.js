@@ -3,6 +3,8 @@ const state = {
   data: null,
   galleryImages: [],
   galleryIndex: 0,
+  galleryProductName: "",
+  galleryDescription: "",
   galleryTouchStartX: 0,
   galleryTouchStartY: 0,
 };
@@ -89,20 +91,23 @@ function openGallery(product) {
     ? product.gallery
     : [product.image];
   state.galleryIndex = 0;
-  renderGallery(product.name[state.language]);
+  state.galleryProductName = product.name[state.language];
+  state.galleryDescription = product.description[state.language];
+  renderGallery();
   document.getElementById("gallery-modal").hidden = false;
   document.body.classList.add("gallery-open");
 }
 
-function renderGallery(productName) {
+function renderGallery() {
   const modal = document.getElementById("gallery-modal");
   const image = document.getElementById("gallery-image");
   const counter = document.getElementById("gallery-counter");
   const hasMultipleImages = state.galleryImages.length > 1;
 
   image.src = state.galleryImages[state.galleryIndex];
-  image.alt = `${productName} ${state.galleryIndex + 1}`;
+  image.alt = `${state.galleryProductName} ${state.galleryIndex + 1}`;
   counter.textContent = `${state.galleryIndex + 1} / ${state.galleryImages.length}`;
+  document.getElementById("gallery-description").textContent = state.galleryDescription;
   document.getElementById("gallery-previous").hidden = !hasMultipleImages;
   document.getElementById("gallery-next").hidden = !hasMultipleImages;
   modal.querySelector(".gallery-dialog").focus();
@@ -117,7 +122,7 @@ function moveGallery(step) {
   if (state.galleryImages.length < 2) return;
   state.galleryIndex = (state.galleryIndex + step + state.galleryImages.length)
     % state.galleryImages.length;
-  renderGallery(document.getElementById("gallery-image").alt.replace(/ \d+$/, ""));
+  renderGallery();
 }
 
 function updateLanguageUI() {
