@@ -39,11 +39,11 @@
   "products": [
     {
       "id": "1",
-      "image": "/images/i-socket_image_1.jpg",
+      "image": "/images/i-socket_image_1_800x993.jpg",
       "gallery": [
-        "/images/i-socket_image_1.jpg",
-        "/images/i-socket_image_2.jpg",
-        "/images/i-socket_image_3.jpg"
+        "/images/i-socket_image_1_800x993.jpg",
+        "/images/i-socket_image_2_800x993.jpg",
+        "/images/i-socket_image_3_800x993.jpg"
       ],
       "name": {
         "en": "I-SOCKET programmer",
