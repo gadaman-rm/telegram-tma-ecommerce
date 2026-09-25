@@ -1,1 +1,23 @@
-{"name":"telegram-tma-ecommerce","version":"1.0.0","type":"module","scripts":{"dev":"tsx watch src/server.ts","build":"tsc","start":"node dist/server.js"},"dependencies":{"dotenv":"^17.4.2","express":"^5.2.1","grammy":"^1.46.0","https-proxy-agent":"^9.1.0"},"devDependencies":{"@types/express":"^5.0.6","@types/node":"^26.6.0","tsx":"^4.23.13","typescript":"^7.0.2"}}
+{
+    "name": "telegram-tma-ecommerce",
+    "version": "1.0.0",
+    "type": "module",
+    "scripts": {
+        "dev": "tsx watch src/server.ts",
+        "build": "tsc",
+        "start": "node dist/server.js",
+        "pm2": "pm2 start dist/server.js --name telegram-tma-ecommerce"
+    },
+    "dependencies": {
+        "dotenv": "^17.4.2",
+        "express": "^5.2.1",
+        "grammy": "^1.46.0",
+        "https-proxy-agent": "^9.1.0"
+    },
+    "devDependencies": {
+        "@types/express": "^5.0.6",
+        "@types/node": "^26.6.0",
+        "tsx": "^4.23.13",
+        "typescript": "^7.0.2"
+    }
+}
