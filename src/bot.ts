@@ -73,6 +73,35 @@ bot.command("start", async (ctx) => {
   );
 });
 
+bot.command("language", async (ctx) => {
+  const rawUrl = process.env.MINI_APP_URL?.trim();
+  const isValidHttps = rawUrl && rawUrl.startsWith("https://");
+
+  if (!isValidHttps) {
+    await ctx.reply("⚠️ Mini App URL is not configured yet.");
+    return;
+  }
+
+  const keyboard = new InlineKeyboard();
+  keyboard
+    .text("English", "lang:en")
+    .text("فارسی", "lang:fa");
+
+  await ctx.reply("Please choose your language:", {
+    reply_markup: keyboard,
+  });
+});
+
+bot.command("help", async (ctx) => {
+  await ctx.reply(
+    "Available commands:\n" +
+      "/start - Start the shop flow\n" +
+      "/language - Choose your language\n" +
+      "/help - Show this menu",
+    { parse_mode: "HTML" }
+  );
+});
+
 bot.callbackQuery(/lang:(en|fa)/, async (ctx) => {
   const selectedLang = ctx.match[1];
   const rawUrl = process.env.MINI_APP_URL?.trim();

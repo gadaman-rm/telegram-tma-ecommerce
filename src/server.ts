@@ -65,6 +65,16 @@ async function run() {
       console.log(`🚀 Polling active for @${botInfo.username}! Send /start in Telegram now.`);
     },
   });
+
+  // 5. Register Telegram command menu entries for the chat UI
+  await bot.api.setMyCommands([
+    { command: "start", description: "Start the shop flow" },
+    { command: "language", description: "Choose your language" },
+    { command: "help", description: "Show available commands" },
+  ], {
+    scope: { type: "default" },
+  });
+  console.log("📋 Telegram command menu updated");
 }
 
 run().catch((err) => {
