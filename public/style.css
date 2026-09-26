@@ -113,10 +113,14 @@ body.ltr {
 }
 
 .contact-icon {
-  width: 18px;
-  height: 18px;
-  fill: currentColor;
-  display: block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.35rem;
+  height: 1.35rem;
+  font-size: 1.35rem;
+  line-height: 1;
+  flex-shrink: 0;
 }
 
 .footer-address {
