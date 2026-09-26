@@ -40,7 +40,11 @@
   },
   "seller": {
     "whatsapp": "+989369887801",
-    "telegram": "@gadaman_rm"
+    "telegram": "@gadaman_rm",
+    "message": {
+      "en": "Hello, I want to ask about your products.",
+      "fa": "سلام، می‌خواهم درباره محصولات شما سوال بپرسم."
+    }
   },
   "productCard": {
     "height": 180,

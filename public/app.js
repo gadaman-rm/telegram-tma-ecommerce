@@ -14,10 +14,11 @@ function setupSellerLinks() {
 
   const whatsappNumber = state.data.seller.whatsapp;
   const telegramValue = state.data.seller.telegram;
+  const sellerMessage = state.data.seller.message?.[state.language] || state.data.seller.message?.en || "Hello, I want to ask about your products.";
   const whatsappLink = document.getElementById("seller-whatsapp");
   const telegramLink = document.getElementById("seller-telegram");
-  const whatsappMessage = encodeURIComponent("Hello I want to ask about your products");
-  const telegramMessage = encodeURIComponent("Hello I want to ask about your products");
+  const whatsappMessage = encodeURIComponent(sellerMessage);
+  const telegramMessage = encodeURIComponent(sellerMessage);
 
   if (whatsappLink && whatsappNumber) {
     whatsappLink.href = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
