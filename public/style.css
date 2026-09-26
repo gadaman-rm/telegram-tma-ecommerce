@@ -411,6 +411,48 @@ body.rtl .gallery-caption svg {
 }
 
 @media (max-width: 480px) {
+  .product-card,
+  body.rtl .product-card {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 12px;
+    gap: 10px;
+  }
+
+  .product-card img,
+  body.rtl .product-card img {
+    order: 0;
+    align-self: center;
+    width: min(100%, 320px);
+    height: 220px;
+    object-fit: contain;
+  }
+
+  body.rtl .product-card .product-info {
+    order: 1;
+  }
+
+  .product-contact-links {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .product-contact-button {
+    min-width: 0;
+    min-height: 40px;
+    gap: 2px;
+    padding: 6px 4px;
+    font-size: 0.68rem;
+    white-space: nowrap;
+  }
+
+  .product-contact-button .contact-icon {
+    width: 0.85rem;
+    height: 0.85rem;
+    font-size: 0.85rem;
+  }
+
   .gallery-modal {
     padding: 12px;
   }
