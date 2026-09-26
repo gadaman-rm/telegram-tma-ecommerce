@@ -266,6 +266,10 @@ body.rtl .product-card .product-info {
   background: #229ed9;
 }
 
+.product-contact-button.youtube {
+  background: #ff0033;
+}
+
 .product-contact-button .contact-icon {
   width: 1rem;
   height: 1rem;

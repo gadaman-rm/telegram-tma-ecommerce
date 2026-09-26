@@ -39,7 +39,7 @@ function createProductContactButton(platform, label, href) {
   link.href = href;
   link.target = "_blank";
   link.rel = "noopener noreferrer";
-  link.setAttribute("aria-label", `Contact seller via ${label}`);
+  link.setAttribute("aria-label", platform === "youtube" ? label : `Contact seller via ${label}`);
 
   const icon = document.createElement("i");
   icon.className = `fa-brands fa-${platform} contact-icon`;
@@ -50,6 +50,19 @@ function createProductContactButton(platform, label, href) {
 
   link.append(icon, text);
   return link;
+}
+
+function getYoutubeUrl(product) {
+  const value = product.youtube?.[state.language];
+  if (typeof value !== "string" || !value.trim()) return "";
+
+  try {
+    const url = new URL(value.trim());
+    const validHosts = ["youtube.com", "www.youtube.com", "m.youtube.com", "youtu.be", "www.youtu.be", "aparat.com", "www.aparat.com"];
+    return url.protocol === "https:" && validHosts.includes(url.hostname) ? url.href : "";
+  } catch {
+    return "";
+  }
 }
 
 function getProductContactUrls(message) {
@@ -161,6 +174,10 @@ function renderProducts() {
     }
     if (contactUrls.whatsapp) {
       contactLinks.appendChild(createProductContactButton("whatsapp", "WhatsApp", contactUrls.whatsapp));
+    }
+    const youtubeUrl = getYoutubeUrl(product);
+    if (youtubeUrl) {
+      contactLinks.appendChild(createProductContactButton("youtube", currentText.youtubeLabel, youtubeUrl));
     }
     card.querySelector(".product-info").appendChild(contactLinks);
     card.querySelector(".product-image").addEventListener("click", () => openGallery(product));

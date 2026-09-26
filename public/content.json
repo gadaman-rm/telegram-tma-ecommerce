@@ -17,6 +17,7 @@
       "pageTitle": "Product Descriptions",
       "languageLabel": "Language",
       "productLabel": "Product",
+      "youtubeLabel": "Watch video",
       "currency": "$",
       "currencyPosition": "prefix",
       "fractionDigits": 2
@@ -25,6 +26,7 @@
       "pageTitle": "توضیحات محصول",
       "languageLabel": "زبان",
       "productLabel": "محصول",
+      "youtubeLabel": "تماشای ویدئو",
       "currency": "تومان",
       "currencyPosition": "suffix",
       "fractionDigits": 0
@@ -68,6 +70,10 @@
       "name": {
         "en": "I-SOCKET programmer",
         "fa": "پروگرامر I-SOCKET"
+      },
+      "youtube": {
+        "en": "https://www.aparat.com/v/f71xm2u?refererRef=channel_page",
+        "fa": "https://www.aparat.com/v/f71xm2u?refererRef=channel_page"
       },
       "description": {
         "en": "The I-SOCKET PLC WiFi Programmer is an advanced industrial solution designed for modern automation, enabling completely wireless programming, monitoring, and remote diagnostics. By eliminating traditional cables and electrical noise issues, it offers dual-mode connectivity: local Direct Hotspot (no router needed) and remote Internet access worldwide without requiring a static IP. Engineered with RS232 and RS485 interfaces, I-SOCKET seamlessly supports Delta and Fatek PLCs, as well as Modbus ASCII devices. Powered directly by the PLC with no external supply required, it delivers unmatched stability in industrial panels, significantly reducing project downtime and on-site maintenance costs.",
