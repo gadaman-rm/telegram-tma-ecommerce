@@ -51,8 +51,8 @@
     }
   },
   "productCard": {
-    "height": 180,
-    "descriptionMaxHeight": 90,
+    "height": 300,
+    "descriptionMaxHeight": 250,
     "thumbnail": {
       "width": 128,
       "height": 128
