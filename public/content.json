@@ -14,7 +14,7 @@
   "defaultLanguage": "fa",
   "ui": {
     "en": {
-      "pageTitle": "Product Descriptions",
+      "pageTitle": "Wireless Programmer for Fatek & Delta PLCs (I-SOCKET)",
       "languageLabel": "Language",
       "productLabel": "Product",
       "youtubeLabel": "Watch video",
@@ -23,7 +23,7 @@
       "fractionDigits": 2
     },
     "fa": {
-      "pageTitle": "توضیحات محصول",
+      "pageTitle": "پروگرامر بی‌سیم فتک و دلتا (I-SOCKET)",
       "languageLabel": "زبان",
       "productLabel": "محصول",
       "youtubeLabel": "تماشای ویدئو",
@@ -34,12 +34,12 @@
   },
   "footer": {
     "en": {
-      "message": "Ask your question or buy",
-      "address": "Address: Tehran, Iran"
+      "message": "Ask questions before buying",
+      "address": "Address: Iran, Tehran, Shams Abad Industrial Town"
     },
     "fa": {
-      "message": "سوال بپرس یا خرید کن",
-      "address": "آدرس: تهران، ایران"
+      "message": "سوال بپرس بعد خرید کن",
+      "address": "آدرس: ایران، تهران، شهرک صنعتی شمس آباد"
     }
   },
   "seller": {
@@ -68,20 +68,20 @@
         "/images/i-socket_image_3_800x993.jpg"
       ],
       "name": {
-        "en": "I-SOCKET programmer",
-        "fa": "پروگرامر I-SOCKET"
+        "en": "📡 Wireless Programmer for Fatek & Delta PLCs (I-SOCKET)",
+        "fa": "📡 پروگرامر بی‌سیم فتک و دلتا (I-SOCKET)"
       },
       "youtube": {
         "en": "https://www.aparat.com/v/f71xm2u?refererRef=channel_page",
         "fa": "https://www.aparat.com/v/f71xm2u?refererRef=channel_page"
       },
       "description": {
-        "en": "The I-SOCKET PLC WiFi Programmer is an advanced industrial solution designed for modern automation, enabling completely wireless programming, monitoring, and remote diagnostics. By eliminating traditional cables and electrical noise issues, it offers dual-mode connectivity: local Direct Hotspot (no router needed) and remote Internet access worldwide without requiring a static IP. Engineered with RS232 and RS485 interfaces, I-SOCKET seamlessly supports Delta and Fatek PLCs, as well as Modbus ASCII devices. Powered directly by the PLC with no external supply required, it delivers unmatched stability in industrial panels, significantly reducing project downtime and on-site maintenance costs.",
-        "fa": "پروگرامر وای‌فای PLC آی‌سوکت (I-SOCKET) نسل جدید ابزارهای اتوماسیون صنعتی برای برنامه‌نویسی، مانیتورینگ و خطایابی کاملاً بی‌سیم پی‌ال‌سی است. این دستگاه با حذف کابل‌های سنتی و برطرف کردن محدودیت‌های فیزیکی و نویزهای صنعتی، امکان اتصال دوگانه به‌صورت لوکال (Hotspot) بدون نیاز به مودم و ریموت (اینترنتی) از هر نقطه دنیا بدون IP استاتیک را فراهم می‌کند. آی‌سوکت با بهره‌گیری از درگاه‌های ارتباطی RS232 و RS485، به‌طور کامل با PLCهای دلتا، فتک و تجهیزات مبتنی بر پروتکل Modbus ASCII سازگار است. از مهم‌ترین ویژگی‌های این ماژول، تغذیه مستقیم از PLC بدون نیاز به منبع تغذیه جداگانه، طراحی صنعتی پایدار و کاهش چشمگیر هزینه‌های پشتیبانی حضوری است."
+        "en": "🔓 Free from cable and laptop failures\n📶 Range over 30 meters with direct line of sight and over 50 meters without direct line of sight\n🌍 Connect from anywhere in the world in internet mode\n🔌 Supports RS232 and RS485\n⚙️ Supports any device in MODBUS ASCII mode\n💰 Reduces on-site support costs\n🏭 The best choice for machine builders for remote support\n🛡️ Stable, industrial-grade, and failure-free\n⚡ Installation and setup in under a minute — easy and fast\n🎛️ Simple and accessible configuration",
+        "fa": "🔓 رهایی از خرابی کابل و لپ‌تاپ\n📶 ارتباط بیش از ۳۰ متر در دید مستقیم و بیش از ۵۰ متر در دید غیرمستقیم\n🌍 ارتباط از هر جای دنیا در حالت اینترنتی\n🔌 پشتیبانی از RS232 و RS485\n⚙️ پشتیبانی از هر دستگاهی در حالت MODBUS ASCII\n💰 کاهش هزینه‌های پشتیبانی حضوری\n🏭 بهترین گزینه برای ماشین‌سازها برای پشتیبانی از راه دور\n🛡️ پایدار، صنعتی و بدون خرابی\n⚡ نصب و راه‌اندازی زیر یک دقیقه، آسان و سریع\n🎛️ تنظیمات آسان و در دسترس"
       },
       "price": {
-        "en": 14.99,
-        "fa": 600000
+        "en": 50,
+        "fa": 7000000
       }
     }
   ]

@@ -226,6 +226,7 @@ body.rtl .product-card .product-info {
   font-size: 0.9rem;
   line-height: 1.4;
   margin-top: 6px;
+  white-space: pre-line;
   max-height: var(--product-description-max-height, none);
   overflow-y: auto;
 }
