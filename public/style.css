@@ -236,6 +236,42 @@ body.rtl .product-card .product-info {
   margin-top: 4px;
 }
 
+.product-contact-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.product-contact-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-height: 32px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.product-contact-button.whatsapp {
+  background: #25d366;
+}
+
+.product-contact-button.telegram {
+  background: #229ed9;
+}
+
+.product-contact-button .contact-icon {
+  width: 1rem;
+  height: 1rem;
+  font-size: 1rem;
+}
+
 body.gallery-open {
   overflow: hidden;
 }

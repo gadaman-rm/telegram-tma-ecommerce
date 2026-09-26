@@ -16,6 +16,7 @@
     "en": {
       "pageTitle": "Product Descriptions",
       "languageLabel": "Language",
+      "productLabel": "Product",
       "currency": "$",
       "currencyPosition": "prefix",
       "fractionDigits": 2
@@ -23,6 +24,7 @@
     "fa": {
       "pageTitle": "توضیحات محصول",
       "languageLabel": "زبان",
+      "productLabel": "محصول",
       "currency": "تومان",
       "currencyPosition": "suffix",
       "fractionDigits": 0

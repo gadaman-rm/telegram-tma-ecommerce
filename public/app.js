@@ -33,6 +33,43 @@ function setupSellerLinks() {
   }
 }
 
+function createProductContactButton(platform, label, href) {
+  const link = document.createElement("a");
+  link.className = `product-contact-button ${platform}`;
+  link.href = href;
+  link.target = "_blank";
+  link.rel = "noopener noreferrer";
+  link.setAttribute("aria-label", `Contact seller via ${label}`);
+
+  const icon = document.createElement("i");
+  icon.className = `fa-brands fa-${platform} contact-icon`;
+  icon.setAttribute("aria-hidden", "true");
+
+  const text = document.createElement("span");
+  text.textContent = label;
+
+  link.append(icon, text);
+  return link;
+}
+
+function getProductContactUrls(message) {
+  const seller = state.data.seller;
+  const encodedMessage = encodeURIComponent(message);
+  const whatsappNumber = String(seller.whatsapp || "").replace(/\D/g, "");
+  const telegramValue = String(seller.telegram || "").trim().replace(/^@/, "");
+
+  return {
+    whatsapp: whatsappNumber
+      ? `https://wa.me/${whatsappNumber}?text=${encodedMessage}`
+      : "",
+    telegram: !telegramValue
+      ? ""
+      : /^\d+$/.test(telegramValue)
+        ? `https://t.me/share/url?url=&text=${encodedMessage}`
+        : `https://t.me/${telegramValue}?text=${encodedMessage}`,
+  };
+}
+
 async function loadContent() {
   const response = await fetch("/content.json");
   if (!response.ok) {
@@ -75,6 +112,7 @@ function renderProducts() {
   container.innerHTML = "";
 
   state.data.products.forEach((product) => {
+    const productName = product.name[state.language];
     const price = typeof product.price === "object"
       ? product.price[state.language]
       : product.price;
@@ -100,17 +138,31 @@ function renderProducts() {
     const priceLabel = currentText.currencyPosition === "suffix"
       ? `${formattedPrice} ${currentText.currency}`
       : `${currentText.currency}${formattedPrice}`;
+    const sellerMessage = state.data.seller.message?.[state.language]
+      || state.data.seller.message?.en
+      || "Hello, I want to ask about this product.";
+    const contactMessage = `${sellerMessage}\n\n${currentText.productLabel}: ${productName}`;
+    const contactUrls = getProductContactUrls(contactMessage);
     const card = document.createElement("div");
     card.className = "product-card";
     card.style.cssText = `${cardHeightStyle}${descriptionMaxHeightStyle}`;
     card.innerHTML = `
-      <img class="product-image" src="${product.image}" alt="${product.name[state.language]}" ${thumbnailStyle} />
+      <img class="product-image" src="${product.image}" alt="${productName}" ${thumbnailStyle} />
       <div class="product-info">
-        <div class="product-title">${product.name[state.language]}</div>
+        <div class="product-title">${productName}</div>
         <div class="product-description">${product.description[state.language]}</div>
         <div class="product-price">${priceLabel}</div>
       </div>
     `;
+    const contactLinks = document.createElement("div");
+    contactLinks.className = "product-contact-links";
+    if (contactUrls.telegram) {
+      contactLinks.appendChild(createProductContactButton("telegram", "Telegram", contactUrls.telegram));
+    }
+    if (contactUrls.whatsapp) {
+      contactLinks.appendChild(createProductContactButton("whatsapp", "WhatsApp", contactUrls.whatsapp));
+    }
+    card.querySelector(".product-info").appendChild(contactLinks);
     card.querySelector(".product-image").addEventListener("click", () => openGallery(product));
     container.appendChild(card);
   });
