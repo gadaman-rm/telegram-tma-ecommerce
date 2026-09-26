@@ -1,3 +1,8 @@
+const sellerLinks = {
+  whatsapp: "https://wa.me/15551234567?text=Hello%20I%20want%20to%20ask%20about%20your%20products",
+  telegram: "https://t.me/your_seller_username",
+};
+
 const state = {
   language: "en",
   data: null,
@@ -8,6 +13,14 @@ const state = {
   galleryTouchStartX: 0,
   galleryTouchStartY: 0,
 };
+
+function setupSellerLinks() {
+  const whatsappLink = document.getElementById("seller-whatsapp");
+  const telegramLink = document.getElementById("seller-telegram");
+
+  if (whatsappLink) whatsappLink.href = sellerLinks.whatsapp;
+  if (telegramLink) telegramLink.href = sellerLinks.telegram;
+}
 
 async function loadContent() {
   const response = await fetch("/content.json");
@@ -153,6 +166,8 @@ window.addEventListener("DOMContentLoaded", () => {
   const languageSelect = document.getElementById("language-select");
   const galleryModal = document.getElementById("gallery-modal");
   const galleryImage = document.getElementById("gallery-image");
+
+  setupSellerLinks();
 
   document.getElementById("gallery-close").addEventListener("click", closeGallery);
   document.getElementById("gallery-previous").addEventListener("click", () => moveGallery(-1));
