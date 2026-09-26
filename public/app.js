@@ -16,7 +16,12 @@ async function loadContent() {
   }
 
   state.data = await response.json();
-  const configuredLanguage = state.data.defaultLanguage;
+  const urlParams = new URLSearchParams(window.location.search);
+  const requestedLanguage = urlParams.get("lang");
+  const configuredLanguage = state.data.languages.some((language) => language.code === requestedLanguage)
+    ? requestedLanguage
+    : state.data.defaultLanguage;
+
   if (state.data.languages.some((language) => language.code === configuredLanguage)) {
     state.language = configuredLanguage;
   }
