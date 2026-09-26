@@ -1,8 +1,3 @@
-const sellerLinks = {
-  whatsapp: "https://wa.me/15551234567?text=Hello%20I%20want%20to%20ask%20about%20your%20products",
-  telegram: "https://t.me/your_seller_username",
-};
-
 const state = {
   language: "en",
   data: null,
@@ -15,11 +10,26 @@ const state = {
 };
 
 function setupSellerLinks() {
+  if (!state.data?.seller) return;
+
+  const whatsappNumber = state.data.seller.whatsapp;
+  const telegramValue = state.data.seller.telegram;
   const whatsappLink = document.getElementById("seller-whatsapp");
   const telegramLink = document.getElementById("seller-telegram");
+  const whatsappMessage = encodeURIComponent("Hello I want to ask about your products");
+  const telegramMessage = encodeURIComponent("Hello I want to ask about your products");
 
-  if (whatsappLink) whatsappLink.href = sellerLinks.whatsapp;
-  if (telegramLink) telegramLink.href = sellerLinks.telegram;
+  if (whatsappLink && whatsappNumber) {
+    whatsappLink.href = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
+  }
+
+  if (telegramLink && telegramValue) {
+    const normalizedTelegram = telegramValue.trim().replace(/^@/, "");
+    const isNumericId = /^\d+$/.test(normalizedTelegram);
+    telegramLink.href = isNumericId
+      ? `tg://user?id=${normalizedTelegram}`
+      : `https://t.me/${normalizedTelegram}?text=${telegramMessage}`;
+  }
 }
 
 async function loadContent() {
@@ -38,6 +48,7 @@ async function loadContent() {
   if (state.data.languages.some((language) => language.code === configuredLanguage)) {
     state.language = configuredLanguage;
   }
+  setupSellerLinks();
   populateLanguageSelector();
   updateLanguageUI();
   renderProducts();
@@ -143,6 +154,22 @@ function moveGallery(step) {
   renderGallery();
 }
 
+function updateFooterLanguage() {
+  if (!state.data) return;
+
+  const footerMessage = document.querySelector(".footer-message");
+  const footerAddress = document.querySelector(".footer-address");
+  const footerText = state.data.footer?.[state.language] || state.data.footer?.en;
+
+  if (footerMessage && footerText) {
+    footerMessage.textContent = footerText.message;
+  }
+
+  if (footerAddress && footerText) {
+    footerAddress.textContent = footerText.address;
+  }
+}
+
 function updateLanguageUI() {
   const pageTitle = document.getElementById("page-title");
   const languageSelect = document.getElementById("language-select");
@@ -152,6 +179,7 @@ function updateLanguageUI() {
 
   pageTitle.textContent = currentText.pageTitle;
   languageSelect.value = state.language;
+  updateFooterLanguage();
 
   document.documentElement.lang = state.language;
   document.documentElement.dir = isRtl ? "rtl" : "ltr";
@@ -166,8 +194,6 @@ window.addEventListener("DOMContentLoaded", () => {
   const languageSelect = document.getElementById("language-select");
   const galleryModal = document.getElementById("gallery-modal");
   const galleryImage = document.getElementById("gallery-image");
-
-  setupSellerLinks();
 
   document.getElementById("gallery-close").addEventListener("click", closeGallery);
   document.getElementById("gallery-previous").addEventListener("click", () => moveGallery(-1));

@@ -28,6 +28,20 @@
       "fractionDigits": 0
     }
   },
+  "footer": {
+    "en": {
+      "message": "Ask your question or buy",
+      "address": "Address: Tehran, Iran"
+    },
+    "fa": {
+      "message": "سوال بپرس یا خرید کن",
+      "address": "آدرس: تهران، ایران"
+    }
+  },
+  "seller": {
+    "whatsapp": "+989369887801",
+    "telegram": "@gadaman_rm"
+  },
   "productCard": {
     "height": 180,
     "descriptionMaxHeight": 90,
