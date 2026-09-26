@@ -14,7 +14,7 @@
   "defaultLanguage": "fa",
   "ui": {
     "en": {
-      "pageTitle": "Wireless Programmer for Fatek & Delta PLCs (I-SOCKET)",
+      "pageTitle": "Wireless Programmer for Fatek & Delta PLCs",
       "languageLabel": "Language",
       "productLabel": "Product",
       "youtubeLabel": "Watch video",
@@ -23,7 +23,7 @@
       "fractionDigits": 2
     },
     "fa": {
-      "pageTitle": "پروگرامر بی‌سیم فتک و دلتا (I-SOCKET)",
+      "pageTitle": "پروگرامر بی‌سیم فتک و دلتا",
       "languageLabel": "زبان",
       "productLabel": "محصول",
       "youtubeLabel": "تماشای ویدئو",
@@ -76,8 +76,8 @@
         "fa": "https://www.aparat.com/v/f71xm2u?refererRef=channel_page"
       },
       "description": {
-        "en": "🔓 Free from cable and laptop failures\n📶 Range over 30 meters with direct line of sight and over 50 meters without direct line of sight\n🌍 Connect from anywhere in the world in internet mode\n🔌 Supports RS232 and RS485\n⚙️ Supports any device in MODBUS ASCII mode\n💰 Reduces on-site support costs\n🏭 The best choice for machine builders for remote support\n🛡️ Stable, industrial-grade, and failure-free\n⚡ Installation and setup in under a minute — easy and fast\n🎛️ Simple and accessible configuration",
-        "fa": "🔓 رهایی از خرابی کابل و لپ‌تاپ\n📶 ارتباط بیش از ۳۰ متر در دید مستقیم و بیش از ۵۰ متر در دید غیرمستقیم\n🌍 ارتباط از هر جای دنیا در حالت اینترنتی\n🔌 پشتیبانی از RS232 و RS485\n⚙️ پشتیبانی از هر دستگاهی در حالت MODBUS ASCII\n💰 کاهش هزینه‌های پشتیبانی حضوری\n🏭 بهترین گزینه برای ماشین‌سازها برای پشتیبانی از راه دور\n🛡️ پایدار، صنعتی و بدون خرابی\n⚡ نصب و راه‌اندازی زیر یک دقیقه، آسان و سریع\n🎛️ تنظیمات آسان و در دسترس"
+        "en": "🔓 Free from cable and laptop failures\n📶 Range over 50 meters with direct line of sight\n🌍 Connect from anywhere in the world in internet mode\n🔌 Supports RS232 and RS485\n⚙️ Supports any device in MODBUS ASCII mode\n💰 Reduces on-site support costs\n🏭 The best choice for machine builders for remote support\n🛡️ Stable, industrial-grade, and failure-free\n⚡ Installation and setup in under a minute — easy and fast\n🎛️ Simple and accessible configuration",
+        "fa": "🔓 رهایی از خرابی کابل و لپ‌تاپ\n📶ارتباط بیش از ۵۰ متر در دید مستقیم\n🌍 ارتباط از هر جای دنیا در حالت اینترنتی\n🔌 پشتیبانی از RS232 و RS485\n⚙️ پشتیبانی از هر دستگاهی در حالت MODBUS ASCII\n💰 کاهش هزینه‌های پشتیبانی حضوری\n🏭 بهترین گزینه برای ماشین‌سازها برای پشتیبانی از راه دور\n🛡️ پایدار، صنعتی و بدون خرابی\n⚡ نصب و راه‌اندازی زیر یک دقیقه، آسان و سریع\n🎛️ تنظیمات آسان و در دسترس"
       },
       "price": {
         "en": 50,

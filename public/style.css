@@ -411,6 +411,26 @@ body.rtl .gallery-caption svg {
 }
 
 @media (max-width: 480px) {
+  .toolbar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: start;
+    gap: 8px;
+  }
+
+  .language-picker {
+    grid-row: 1;
+    justify-self: start;
+  }
+
+  h1,
+  body.rtl h1 {
+    grid-row: 2;
+    width: 100%;
+    text-align: start;
+    order: 0;
+  }
+
   .product-card,
   body.rtl .product-card {
     flex-direction: column;
