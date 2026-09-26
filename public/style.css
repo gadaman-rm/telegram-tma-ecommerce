@@ -1,3 +1,19 @@
+@font-face {
+  font-family: "B Nazanin";
+  src: url("/fonts/B%20Nazanin.TTF") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "B Titr";
+  src: url("/fonts/B%20Titr%20Bold_0.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+
 :root {
   --bg-color: var(--tg-theme-bg-color, #ffffff);
   --text-color: var(--tg-theme-text-color, #222222);
@@ -20,9 +36,9 @@ body {
 }
 
 body {
-  font-family:
+  font-family: var(--font-base,
     -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
-    sans-serif;
+    sans-serif);
   background-color: var(--bg-color);
   color: var(--text-color);
   padding: 16px 16px 140px;
@@ -67,6 +83,7 @@ body.ltr {
 }
 
 .footer-message {
+  font-family: var(--font-footer-message, inherit);
   text-align: center;
   font-size: 0.9rem;
   font-weight: 700;
@@ -84,6 +101,7 @@ body.ltr {
 }
 
 .contact-button {
+  font-family: var(--font-footer-contact, inherit);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -124,18 +142,21 @@ body.ltr {
 }
 
 .footer-address {
+  font-family: var(--font-footer-address, inherit);
   text-align: center;
   font-size: 0.8rem;
   color: var(--hint-color);
 }
 
 h1 {
+  font-family: var(--font-page-title, inherit);
   font-size: 1.25rem;
   text-align: start;
   order: 0;
 }
 
 .language-picker {
+  font-family: var(--font-language-picker, inherit);
   display: inline-flex;
   align-items: center;
   gap: 8px;
@@ -217,11 +238,13 @@ body.rtl .product-card .product-info {
 }
 
 .product-title {
+  font-family: var(--font-product-title, inherit);
   font-weight: 600;
   font-size: 0.95rem;
 }
 
 .product-description {
+  font-family: var(--font-product-description, inherit);
   color: var(--text-color);
   font-size: 0.9rem;
   line-height: 1.4;
@@ -232,6 +255,7 @@ body.rtl .product-card .product-info {
 }
 
 .product-price {
+  font-family: var(--font-product-price, inherit);
   color: var(--hint-color);
   font-size: 0.85rem;
   margin-top: 4px;
@@ -245,6 +269,7 @@ body.rtl .product-card .product-info {
 }
 
 .product-contact-button {
+  font-family: var(--font-product-contact, inherit);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -360,6 +385,7 @@ body.gallery-open {
 }
 
 .gallery-counter {
+  font-family: var(--font-gallery, inherit);
   position: absolute;
   top: 12px;
   inset-inline-start: 12px;
@@ -386,6 +412,7 @@ body.gallery-open {
 }
 
 .gallery-description {
+  font-family: var(--font-gallery, inherit);
   flex: 1;
   max-height: 4.2em;
   overflow: hidden;

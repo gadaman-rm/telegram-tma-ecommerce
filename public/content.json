@@ -20,7 +20,20 @@
       "youtubeLabel": "Watch video",
       "currency": "$",
       "currencyPosition": "prefix",
-      "fractionDigits": 2
+      "fractionDigits": 2,
+      "fonts": {
+        "base": "system-ui, sans-serif",
+        "pageTitle": "system-ui, sans-serif",
+        "languagePicker": "system-ui, sans-serif",
+        "productTitle": "system-ui, sans-serif",
+        "productDescription": "system-ui, sans-serif",
+        "productPrice": "system-ui, sans-serif",
+        "productContact": "system-ui, sans-serif",
+        "footerMessage": "system-ui, sans-serif",
+        "footerContact": "system-ui, sans-serif",
+        "footerAddress": "system-ui, sans-serif",
+        "gallery": "system-ui, sans-serif"
+      }
     },
     "fa": {
       "pageTitle": "پروگرامر بی‌سیم فتک و دلتا",
@@ -29,7 +42,20 @@
       "youtubeLabel": "تماشای ویدئو",
       "currency": "تومان",
       "currencyPosition": "suffix",
-      "fractionDigits": 0
+      "fractionDigits": 0,
+      "fonts": {
+        "base": "B Nazanin, sans-serif",
+        "pageTitle": "B Titr, sans-serif",
+        "languagePicker": "B Nazanin, sans-serif",
+        "productTitle": "B Titr, sans-serif",
+        "productDescription": "B Nazanin, sans-serif",
+        "productPrice": "B Nazanin, sans-serif",
+        "productContact": "B Nazanin, sans-serif",
+        "footerMessage": "B Titr, sans-serif",
+        "footerContact": "B Nazanin, sans-serif",
+        "footerAddress": "B Nazanin, sans-serif",
+        "gallery": "B Nazanin, sans-serif"
+      }
     }
   },
   "footer": {

@@ -240,6 +240,33 @@ function updateFooterLanguage() {
   }
 }
 
+function updateLanguageFonts() {
+  const fonts = state.data.ui[state.language].fonts || {};
+  const root = document.documentElement;
+  const fontParts = [
+    "base",
+    "pageTitle",
+    "languagePicker",
+    "productTitle",
+    "productDescription",
+    "productPrice",
+    "productContact",
+    "footerMessage",
+    "footerContact",
+    "footerAddress",
+    "gallery",
+  ];
+
+  fontParts.forEach((part) => {
+    const value = fonts[part];
+    if (typeof value === "string" && value.trim()) {
+      root.style.setProperty(`--font-${part.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`)}`, value);
+    } else {
+      root.style.removeProperty(`--font-${part.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`)}`);
+    }
+  });
+}
+
 function updateLanguageUI() {
   const pageTitle = document.getElementById("page-title");
   const languageSelect = document.getElementById("language-select");
@@ -249,6 +276,7 @@ function updateLanguageUI() {
 
   pageTitle.textContent = currentText.pageTitle;
   languageSelect.value = state.language;
+  updateLanguageFonts();
   updateFooterLanguage();
 
   document.documentElement.lang = state.language;
