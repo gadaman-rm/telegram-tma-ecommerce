@@ -120,10 +120,12 @@ bot.callbackQuery(/lang:(en|fa)/, async (ctx) => {
   }
 
   const appUrl = buildMiniAppUrl(rawUrl, selectedLang);
-  const storeButton = new InlineKeyboard().webApp(
-    selectedLang === "en" ? "🛍️ Open Store" : "🛍️ باز کردن فروشگاه",
-    appUrl,
-  );
+  const storeButton = new InlineKeyboard()
+    .webApp(
+      selectedLang === "en" ? "🛍️ Open Store" : "🛍️ باز کردن فروشگاه",
+      appUrl,
+    )
+    .text(selectedLang === "en" ? "🎬 Sample video" : "🎬 ویدئوی نمونه", "sample_video");
 
   await ctx.editMessageCaption(
     {
@@ -137,6 +139,13 @@ bot.callbackQuery(/lang:(en|fa)/, async (ctx) => {
   );
 
   await ctx.answerCallbackQuery({ text: selectedLang === "en" ? "English selected" : "زبان فارسی انتخاب شد" });
+});
+
+bot.callbackQuery("sample_video", async (ctx) => {
+  await ctx.answerCallbackQuery();
+  await ctx.replyWithVideo(
+    new InputFile(new URL("../public/videos/i-socket_introduction.mp4", import.meta.url)),
+  );
 });
 
 // 5. Mini App Order Data Receiver (Telegram.WebApp.sendData)
