@@ -129,6 +129,8 @@ function renderProducts() {
     const price = typeof product.price === "object"
       ? product.price[state.language]
       : product.price;
+    const hasPrice = price !== undefined && price !== null && price !== ""
+      && Number.isFinite(Number(price));
     const thumbnail = product.thumbnail ?? state.data.productCard?.thumbnail;
     const thumbnailWidth = Number(thumbnail?.width);
     const thumbnailHeight = Number(thumbnail?.height);
@@ -144,13 +146,17 @@ function renderProducts() {
     const descriptionMaxHeightStyle = Number.isFinite(descriptionMaxHeight) && descriptionMaxHeight > 0
       ? `--product-description-max-height: ${descriptionMaxHeight}px;`
       : "";
-    const formattedPrice = new Intl.NumberFormat(state.language, {
-      minimumFractionDigits: currentText.fractionDigits ?? 2,
-      maximumFractionDigits: currentText.fractionDigits ?? 2,
-    }).format(Number(price));
-    const priceLabel = currentText.currencyPosition === "suffix"
-      ? `${formattedPrice} ${currentText.currency}`
-      : `${currentText.currency}${formattedPrice}`;
+    const formattedPrice = hasPrice
+      ? new Intl.NumberFormat(state.language, {
+        minimumFractionDigits: currentText.fractionDigits ?? 2,
+        maximumFractionDigits: currentText.fractionDigits ?? 2,
+      }).format(Number(price))
+      : currentText.priceOnRequest || state.data.ui.en.priceOnRequest;
+    const priceLabel = hasPrice
+      ? currentText.currencyPosition === "suffix"
+        ? `${formattedPrice} ${currentText.currency}`
+        : `${currentText.currency}${formattedPrice}`
+      : formattedPrice;
     const sellerMessage = state.data.seller.message?.[state.language]
       || state.data.seller.message?.en
       || "Hello, I want to ask about this product.";
