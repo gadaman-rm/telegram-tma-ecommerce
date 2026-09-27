@@ -160,7 +160,15 @@ function renderProducts() {
     card.className = "product-card";
     card.style.cssText = `${cardHeightStyle}${descriptionMaxHeightStyle}`;
     card.innerHTML = `
-      <img class="product-image" src="${product.image}" alt="${productName}" ${thumbnailStyle} />
+      <div class="product-image-wrap" ${thumbnailStyle}>
+        <img class="product-image" src="${product.image}" alt="${productName}" />
+        <button class="product-image-enlarge" type="button" aria-label="Enlarge ${productName}">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="10.8" cy="10.8" r="6.3" />
+            <path d="m16 16 4.2 4.2" />
+          </svg>
+        </button>
+      </div>
       <div class="product-info">
         <div class="product-title">${productName}</div>
         <div class="product-description">${product.description[state.language]}</div>
@@ -181,6 +189,7 @@ function renderProducts() {
     }
     card.querySelector(".product-info").appendChild(contactLinks);
     card.querySelector(".product-image").addEventListener("click", () => openGallery(product));
+    card.querySelector(".product-image-enlarge").addEventListener("click", () => openGallery(product));
     container.appendChild(card);
   });
 }
