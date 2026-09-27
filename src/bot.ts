@@ -1,6 +1,6 @@
 import "dotenv/config";
 import { readFileSync } from "node:fs";
-import { Bot, BotConfig, Context, InlineKeyboard, InputFile } from "grammy";
+import { Bot, BotConfig, Context, InlineKeyboard, InputFile, Keyboard } from "grammy";
 import { HttpsProxyAgent } from "https-proxy-agent";
 import { buildMiniAppUrl } from "./language.js";
 import { OrderPayload } from "./types.js";
@@ -34,6 +34,14 @@ if (useProxy) {
 }
 
 export const bot = new Bot(token, botConfig);
+
+function getShopAdminChatId(): number | undefined {
+  const value = process.env.SHOP_ADMIN_CHAT_ID?.trim();
+  if (!value || !/^-?\d+$/.test(value)) return undefined;
+
+  const chatId = Number(value);
+  return Number.isSafeInteger(chatId) ? chatId : undefined;
+}
 
 // 2. Global Error Handler
 bot.catch((err) => {
@@ -133,6 +141,11 @@ bot.callbackQuery(/lang:(en|fa)/, async (ctx) => {
     .text(
       selectedLang === "en" ? "🎬 Sample video" : "🎬 ویدئوی نمونه",
       `sample_video:${selectedLang}`,
+    )
+    .row()
+    .text(
+      selectedLang === "en" ? "📞 Call me" : "📞 با من تماس بگیرید",
+      `call_me:${selectedLang}`,
     );
 
   await ctx.editMessageCaption(
@@ -162,6 +175,71 @@ bot.callbackQuery(/^sample_video:(en|fa)$/, async (ctx) => {
   await ctx.replyWithVideo(sampleVideo, {
     caption: content.bot.sampleVideoCaption[selectedLang],
   });
+});
+
+bot.callbackQuery(/^call_me:(en|fa)$/, async (ctx) => {
+  const selectedLang = ctx.match[1] as "en" | "fa";
+  const adminChatId = getShopAdminChatId();
+
+  if (adminChatId === undefined) {
+    await ctx.answerCallbackQuery({ text: "Shop contact is not configured." });
+    await ctx.reply(
+      selectedLang === "en"
+        ? "Phone callbacks are not available right now."
+        : "در حال حاضر امکان درخواست تماس وجود ندارد.",
+    );
+    return;
+  }
+
+  await ctx.answerCallbackQuery();
+  const keyboard = new Keyboard()
+    .requestContact(selectedLang === "en" ? "Share my phone number" : "اشتراک‌گذاری شماره تلفن")
+    .resized()
+    .oneTime();
+
+  await ctx.reply(
+    selectedLang === "en"
+      ? "Please share your phone number and the shop will call you."
+      : "لطفاً شماره تلفن خود را به اشتراک بگذارید تا فروشگاه با شما تماس بگیرد.",
+    { reply_markup: keyboard },
+  );
+});
+
+bot.on("message:contact", async (ctx) => {
+  const contact = ctx.message.contact;
+  if (contact.user_id !== ctx.from.id) {
+    await ctx.reply("Please use the button to share your own phone number.");
+    return;
+  }
+
+  const adminChatId = getShopAdminChatId();
+  if (adminChatId === undefined) {
+    await ctx.reply("Shop contact is not configured.", {
+      reply_markup: { remove_keyboard: true },
+    });
+    return;
+  }
+
+  try {
+    await ctx.api.sendContact(
+      adminChatId,
+      contact.phone_number,
+      contact.first_name,
+      { last_name: contact.last_name },
+    );
+    await ctx.api.sendMessage(
+      adminChatId,
+      `Call request from ${ctx.from.first_name} (user ID: ${ctx.from.id}${ctx.from.username ? `, @${ctx.from.username}` : ""}).`,
+    );
+    await ctx.reply("Thanks! The shop will call you soon.", {
+      reply_markup: { remove_keyboard: true },
+    });
+  } catch (error) {
+    console.error("Failed to send call request to shop admin:", error);
+    await ctx.reply("Sorry, your call request could not be sent. Please try again.", {
+      reply_markup: { remove_keyboard: true },
+    });
+  }
 });
 
 // 5. Mini App Order Data Receiver (Telegram.WebApp.sendData)
