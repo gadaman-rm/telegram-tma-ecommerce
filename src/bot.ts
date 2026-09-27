@@ -10,7 +10,25 @@ if (!token) throw new Error("BOT_TOKEN is missing in environment variables.");
 
 const content = JSON.parse(
   readFileSync(new URL("../public/content.json", import.meta.url), "utf8"),
-) as { bot: { sampleVideoCaption: Record<"en" | "fa", string> } };
+) as {
+  bot: {
+    sampleVideoCaption: Record<"en" | "fa", string>;
+    callMe: Record<
+      "en" | "fa",
+      {
+        button: string;
+        adminNotConfiguredAlert: string;
+        adminNotConfigured: string;
+        sharePhonePrompt: string;
+        sharePhoneButton: string;
+        shareOwnPhone: string;
+        requestSent: string;
+        requestFailed: string;
+        adminRequest: string;
+      }
+    >;
+  };
+};
 
 // 1. Configure proxy conditionally
 const botConfig: BotConfig<Context> = {};
@@ -42,6 +60,8 @@ function getShopAdminChatId(): number | undefined {
   const chatId = Number(value);
   return Number.isSafeInteger(chatId) ? chatId : undefined;
 }
+
+const callMeLanguageByUserId = new Map<number, "en" | "fa">();
 
 // 2. Global Error Handler
 bot.catch((err) => {
@@ -125,7 +145,7 @@ bot.command("help", async (ctx) => {
 });
 
 bot.callbackQuery(/lang:(en|fa)/, async (ctx) => {
-  const selectedLang = ctx.match[1];
+  const selectedLang = ctx.match[1] as "en" | "fa";
   const rawUrl = process.env.MINI_APP_URL?.trim();
   if (!rawUrl || !rawUrl.startsWith("https://")) {
     await ctx.answerCallbackQuery({ text: "Mini App URL is not configured." });
@@ -143,10 +163,7 @@ bot.callbackQuery(/lang:(en|fa)/, async (ctx) => {
       `sample_video:${selectedLang}`,
     )
     .row()
-    .text(
-      selectedLang === "en" ? "📞 Call me" : "📞 با من تماس بگیرید",
-      `call_me:${selectedLang}`,
-    );
+    .text(content.bot.callMe[selectedLang].button, `call_me:${selectedLang}`);
 
   await ctx.editMessageCaption(
     {
@@ -182,39 +199,38 @@ bot.callbackQuery(/^call_me:(en|fa)$/, async (ctx) => {
   const adminChatId = getShopAdminChatId();
 
   if (adminChatId === undefined) {
-    await ctx.answerCallbackQuery({ text: "Shop contact is not configured." });
-    await ctx.reply(
-      selectedLang === "en"
-        ? "Phone callbacks are not available right now."
-        : "در حال حاضر امکان درخواست تماس وجود ندارد.",
-    );
+    await ctx.answerCallbackQuery({
+      text: content.bot.callMe[selectedLang].adminNotConfiguredAlert,
+    });
+    await ctx.reply(content.bot.callMe[selectedLang].adminNotConfigured);
     return;
   }
 
   await ctx.answerCallbackQuery();
+  callMeLanguageByUserId.set(ctx.from.id, selectedLang);
   const keyboard = new Keyboard()
-    .requestContact(selectedLang === "en" ? "Share my phone number" : "اشتراک‌گذاری شماره تلفن")
+    .requestContact(content.bot.callMe[selectedLang].sharePhoneButton)
     .resized()
     .oneTime();
 
   await ctx.reply(
-    selectedLang === "en"
-      ? "Please share your phone number and the shop will call you."
-      : "لطفاً شماره تلفن خود را به اشتراک بگذارید تا فروشگاه با شما تماس بگیرد.",
+    content.bot.callMe[selectedLang].sharePhonePrompt,
     { reply_markup: keyboard },
   );
 });
 
 bot.on("message:contact", async (ctx) => {
+  const selectedLang = callMeLanguageByUserId.get(ctx.from.id) ?? "en";
   const contact = ctx.message.contact;
   if (contact.user_id !== ctx.from.id) {
-    await ctx.reply("Please use the button to share your own phone number.");
+    await ctx.reply(content.bot.callMe[selectedLang].shareOwnPhone);
     return;
   }
 
   const adminChatId = getShopAdminChatId();
   if (adminChatId === undefined) {
-    await ctx.reply("Shop contact is not configured.", {
+    callMeLanguageByUserId.delete(ctx.from.id);
+    await ctx.reply(content.bot.callMe[selectedLang].adminNotConfiguredAlert, {
       reply_markup: { remove_keyboard: true },
     });
     return;
@@ -227,16 +243,22 @@ bot.on("message:contact", async (ctx) => {
       contact.first_name,
       { last_name: contact.last_name },
     );
+    const adminRequest = content.bot.callMe[selectedLang].adminRequest
+      .replace("{name}", ctx.from.first_name)
+      .replace("{userId}", String(ctx.from.id))
+      .replace("{username}", ctx.from.username ? `, @${ctx.from.username}` : "");
     await ctx.api.sendMessage(
       adminChatId,
-      `Call request from ${ctx.from.first_name} (user ID: ${ctx.from.id}${ctx.from.username ? `, @${ctx.from.username}` : ""}).`,
+      adminRequest,
     );
-    await ctx.reply("Thanks! The shop will call you soon.", {
+    callMeLanguageByUserId.delete(ctx.from.id);
+    await ctx.reply(content.bot.callMe[selectedLang].requestSent, {
       reply_markup: { remove_keyboard: true },
     });
   } catch (error) {
     console.error("Failed to send call request to shop admin:", error);
-    await ctx.reply("Sorry, your call request could not be sent. Please try again.", {
+    callMeLanguageByUserId.delete(ctx.from.id);
+    await ctx.reply(content.bot.callMe[selectedLang].requestFailed, {
       reply_markup: { remove_keyboard: true },
     });
   }

@@ -16,6 +16,30 @@
     "sampleVideoCaption": {
       "en": "📹 Quick intro to the I-SOCKET wireless programmer ⚡️\n🔧 Compatible with Fatek and Delta PLCs\n👨‍💻 Wireless programming, hassle-free!\n☝️ Watch it now 🎬",
       "fa": "📹 معرفی کوتاه پروگرامر بی‌سیم I-SOCKET ⚡️\n🔧 سازگار با PLCهای فتک و دلتا\n👨‍💻 برنامه‌نویسی بی‌سیم، بدون دردسر!\n☝️ همین حالا تماشا کنید 🎬"
+    },
+    "callMe": {
+      "en": {
+        "button": "📞 Call me",
+        "adminNotConfiguredAlert": "Shop contact is not configured.",
+        "adminNotConfigured": "Phone callbacks are not available right now.",
+        "sharePhonePrompt": "Please share your phone number and the shop will call you.",
+        "sharePhoneButton": "Share my phone number",
+        "shareOwnPhone": "Please use the button to share your own phone number.",
+        "requestSent": "Thanks! The shop will call you soon.",
+        "requestFailed": "Sorry, your call request could not be sent. Please try again.",
+        "adminRequest": "Call request from {name} (user ID: {userId}{username})."
+      },
+      "fa": {
+        "button": "📞 با من تماس بگیرید",
+        "adminNotConfiguredAlert": "اطلاعات تماس فروشگاه تنظیم نشده است.",
+        "adminNotConfigured": "در حال حاضر امکان درخواست تماس وجود ندارد.",
+        "sharePhonePrompt": "لطفاً شماره تلفن خود را به اشتراک بگذارید تا فروشگاه با شما تماس بگیرد.",
+        "sharePhoneButton": "اشتراک‌گذاری شماره تلفن",
+        "shareOwnPhone": "لطفاً با استفاده از دکمه، شماره تلفن خودتان را به اشتراک بگذارید.",
+        "requestSent": "متشکریم! فروشگاه به‌زودی با شما تماس می‌گیرد.",
+        "requestFailed": "متأسفیم، درخواست تماس ارسال نشد. لطفاً دوباره تلاش کنید.",
+        "adminRequest": "درخواست تماس از طرف {name} (شناسه کاربر: {userId}{username})."
+      }
     }
   },
   "ui": {
