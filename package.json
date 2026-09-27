@@ -4,6 +4,7 @@
     "type": "module",
     "scripts": {
         "dev": "tsx watch src/server.ts",
+        "dev:server": "tsx watch src/server.ts --server-only",
         "build": "tsc",
         "start": "node dist/server.js",
         "pm2": "pm2 start dist/server.js --name telegram-tma-ecommerce"

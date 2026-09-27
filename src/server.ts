@@ -2,7 +2,6 @@ import express from "express";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import dotenv from "dotenv";
-import { bot } from "./bot.js";
 
 dotenv.config();
 
@@ -11,6 +10,7 @@ const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const serverOnly = process.argv.includes("--server-only");
 
 app.use(express.json());
 
@@ -34,6 +34,11 @@ async function run() {
     console.log(`🚀 Mini App Web Server running on port ${PORT}`);
   });
 
+  if (serverOnly) {
+    console.log("🤖 Bot disabled (server-only mode)");
+    return;
+  }
+
   // 2. Check token existence
   console.log("🔑 Checking token...");
   const token = process.env.BOT_TOKEN;
@@ -42,6 +47,8 @@ async function run() {
     return;
   }
   console.log(`🔑 Token found (starts with: ${token.substring(0, 6)}...)`);
+
+  const { bot } = await import("./bot.js");
 
   // 3. Test direct network connectivity to Telegram
   console.log("📡 Pinging Telegram API directly...");
