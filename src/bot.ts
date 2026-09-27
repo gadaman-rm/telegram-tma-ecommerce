@@ -125,11 +125,12 @@ bot.callbackQuery(/lang:(en|fa)/, async (ctx) => {
     appUrl,
   );
 
-  await ctx.editMessageText(
-    selectedLang === "en"
-      ? `Language selected: <b>English</b>\n\nTap below to open the store.`
-      : `زبان انتخاب شد: <b>فارسی</b>\n\nبرای باز کردن فروشگاه دکمه زیر را فشار دهید.`,
+  await ctx.editMessageCaption(
     {
+      caption:
+        selectedLang === "en"
+          ? `Language selected: <b>English</b>\n\nTap below to open the store.`
+          : `زبان انتخاب شد: <b>فارسی</b>\n\nبرای باز کردن فروشگاه دکمه زیر را فشار دهید.`,
       parse_mode: "HTML",
       reply_markup: storeButton,
     }
