@@ -142,10 +142,15 @@ bot.callbackQuery(/lang:(en|fa)/, async (ctx) => {
 });
 
 bot.callbackQuery("sample_video", async (ctx) => {
+  const rawUrl = process.env.MINI_APP_URL?.trim();
+  const isValidHttps = rawUrl && rawUrl.startsWith("https://");
+  const sampleVideoPath = "/videos/i-socket_introduction_compressed.mp4";
+  const sampleVideo = isValidHttps && process.argv.includes("--local-test")
+    ? new URL(sampleVideoPath, rawUrl).toString()
+    : new InputFile(new URL(`../public${sampleVideoPath}`, import.meta.url));
+
   await ctx.answerCallbackQuery();
-  await ctx.replyWithVideo(
-    new InputFile(new URL("../public/videos/i-socket_introduction.mp4", import.meta.url)),
-  );
+  await ctx.replyWithVideo(sampleVideo);
 });
 
 // 5. Mini App Order Data Receiver (Telegram.WebApp.sendData)
