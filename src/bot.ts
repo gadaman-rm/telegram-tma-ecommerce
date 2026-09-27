@@ -1,4 +1,5 @@
 import "dotenv/config";
+import { readFileSync } from "node:fs";
 import { Bot, BotConfig, Context, InlineKeyboard, InputFile } from "grammy";
 import { HttpsProxyAgent } from "https-proxy-agent";
 import { buildMiniAppUrl } from "./language.js";
@@ -6,6 +7,10 @@ import { OrderPayload } from "./types.js";
 
 const token = process.env.BOT_TOKEN;
 if (!token) throw new Error("BOT_TOKEN is missing in environment variables.");
+
+const content = JSON.parse(
+  readFileSync(new URL("../public/content.json", import.meta.url), "utf8"),
+) as { bot: { sampleVideoCaption: Record<"en" | "fa", string> } };
 
 // 1. Configure proxy conditionally
 const botConfig: BotConfig<Context> = {};
@@ -125,7 +130,10 @@ bot.callbackQuery(/lang:(en|fa)/, async (ctx) => {
       selectedLang === "en" ? "🛍️ Open Store" : "🛍️ باز کردن فروشگاه",
       appUrl,
     )
-    .text(selectedLang === "en" ? "🎬 Sample video" : "🎬 ویدئوی نمونه", "sample_video");
+    .text(
+      selectedLang === "en" ? "🎬 Sample video" : "🎬 ویدئوی نمونه",
+      `sample_video:${selectedLang}`,
+    );
 
   await ctx.editMessageCaption(
     {
@@ -141,7 +149,8 @@ bot.callbackQuery(/lang:(en|fa)/, async (ctx) => {
   await ctx.answerCallbackQuery({ text: selectedLang === "en" ? "English selected" : "زبان فارسی انتخاب شد" });
 });
 
-bot.callbackQuery("sample_video", async (ctx) => {
+bot.callbackQuery(/^sample_video:(en|fa)$/, async (ctx) => {
+  const selectedLang = ctx.match[1] as "en" | "fa";
   const rawUrl = process.env.MINI_APP_URL?.trim();
   const isValidHttps = rawUrl && rawUrl.startsWith("https://");
   const sampleVideoPath = "/videos/i-socket_introduction_compressed.mp4";
@@ -150,7 +159,9 @@ bot.callbackQuery("sample_video", async (ctx) => {
     : new InputFile(new URL(`../public${sampleVideoPath}`, import.meta.url));
 
   await ctx.answerCallbackQuery();
-  await ctx.replyWithVideo(sampleVideo);
+  await ctx.replyWithVideo(sampleVideo, {
+    caption: content.bot.sampleVideoCaption[selectedLang],
+  });
 });
 
 // 5. Mini App Order Data Receiver (Telegram.WebApp.sendData)

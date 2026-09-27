@@ -12,6 +12,12 @@
     }
   ],
   "defaultLanguage": "fa",
+  "bot": {
+    "sampleVideoCaption": {
+      "en": "📹 Quick intro to the I-SOCKET wireless programmer ⚡️\n🔧 Compatible with Fatek and Delta PLCs\n👨‍💻 Wireless programming, hassle-free!\n☝️ Watch it now 🎬",
+      "fa": "📹 معرفی کوتاه پروگرامر بی‌سیم I-SOCKET ⚡️\n🔧 سازگار با PLCهای فتک و دلتا\n👨‍💻 برنامه‌نویسی بی‌سیم، بدون دردسر!\n☝️ همین حالا تماشا کنید 🎬"
+    }
+  },
   "ui": {
     "en": {
       "pageTitle": "Wireless Programmer for Fatek & Delta PLCs",
