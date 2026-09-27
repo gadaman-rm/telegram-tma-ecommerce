@@ -4,6 +4,7 @@
     "type": "module",
     "scripts": {
         "dev": "tsx watch src/server.ts",
+        "dev:local": "tsx watch src/server.ts --local-test",
         "dev:server": "tsx watch src/server.ts --server-only",
         "build": "tsc",
         "start": "node dist/server.js",

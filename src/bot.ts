@@ -50,11 +50,13 @@ bot.command("start", async (ctx) => {
 
   const rawUrl = process.env.MINI_APP_URL?.trim();
   const isValidHttps = rawUrl && rawUrl.startsWith("https://");
+  const bannerPath = "/images/i-socket_simple-banner_825x460.jpg";
+  const banner = isValidHttps && process.argv.includes("--local-test")
+    ? new URL(bannerPath, rawUrl).toString()
+    : new InputFile(new URL(`../public${bannerPath}`, import.meta.url));
 
   if (!isValidHttps) {
-    await ctx.replyWithPhoto(
-      new InputFile(new URL("../public/images/i-socket_simple-banner_825x460.jpg", import.meta.url)),
-      {
+    await ctx.replyWithPhoto(banner, {
       caption:
         `👋 Welcome to our Store, <b>${ctx.from?.first_name}</b>!\n\n` +
         `⚠️ Mini App URL is not set or not HTTPS.\n` +
@@ -70,9 +72,7 @@ bot.command("start", async (ctx) => {
     .text("English", "lang:en")
     .text("فارسی", "lang:fa");
 
-  await ctx.replyWithPhoto(
-    new URL("/images/i-socket_simple-banner_825x460.jpg", rawUrl).toString(),
-    {
+  await ctx.replyWithPhoto(banner, {
       caption:
         `👋 Welcome to our Store, <b>${ctx.from?.first_name}</b>!\n\n` +
         `Please select your language to continue.`,
