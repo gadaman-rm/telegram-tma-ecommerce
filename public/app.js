@@ -215,11 +215,18 @@ function openGallery(product) {
 function renderGallery() {
   const modal = document.getElementById("gallery-modal");
   const image = document.getElementById("gallery-image");
+  const stage = image.closest(".gallery-stage");
   const counter = document.getElementById("gallery-counter");
   const hasMultipleImages = state.galleryImages.length > 1;
 
+  stage.classList.add("is-loading");
+  stage.setAttribute("aria-busy", "true");
   image.src = state.galleryImages[state.galleryIndex];
   image.alt = `${state.galleryProductName} ${state.galleryIndex + 1}`;
+  if (image.complete) {
+    stage.classList.remove("is-loading");
+    stage.setAttribute("aria-busy", "false");
+  }
   counter.textContent = `${state.galleryIndex + 1} / ${state.galleryImages.length}`;
   document.getElementById("gallery-description").textContent = state.galleryDescription;
   document.getElementById("gallery-previous").hidden = !hasMultipleImages;
@@ -307,6 +314,14 @@ window.addEventListener("DOMContentLoaded", () => {
   const languageSelect = document.getElementById("language-select");
   const galleryModal = document.getElementById("gallery-modal");
   const galleryImage = document.getElementById("gallery-image");
+  const galleryStage = galleryImage.closest(".gallery-stage");
+
+  const finishGalleryImageLoading = () => {
+    galleryStage.classList.remove("is-loading");
+    galleryStage.setAttribute("aria-busy", "false");
+  };
+  galleryImage.addEventListener("load", finishGalleryImageLoading);
+  galleryImage.addEventListener("error", finishGalleryImageLoading);
 
   document.getElementById("gallery-close").addEventListener("click", closeGallery);
   document.getElementById("gallery-previous").addEventListener("click", () => moveGallery(-1));

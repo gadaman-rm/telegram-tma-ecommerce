@@ -371,6 +371,35 @@ body.gallery-open {
   margin: 0 auto;
 }
 
+.gallery-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+
+.gallery-loader::after {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgb(255 255 255 / 35%);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  content: "";
+  animation: gallery-spin 0.8s linear infinite;
+}
+
+.gallery-stage:not(.is-loading) .gallery-loader {
+  display: none;
+}
+
+@keyframes gallery-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .gallery-image {
   display: block;
   width: auto;
