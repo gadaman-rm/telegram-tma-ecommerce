@@ -1,5 +1,5 @@
 import "dotenv/config";
-import { Bot, BotConfig, Context, InlineKeyboard } from "grammy";
+import { Bot, BotConfig, Context, InlineKeyboard, InputFile } from "grammy";
 import { HttpsProxyAgent } from "https-proxy-agent";
 import { buildMiniAppUrl } from "./language.js";
 import { OrderPayload } from "./types.js";
@@ -33,6 +33,9 @@ export const bot = new Bot(token, botConfig);
 // 2. Global Error Handler
 bot.catch((err) => {
   console.error("💥 Error in bot handler:", err.error);
+  if (err.error instanceof Error && "error" in err.error) {
+    console.error("Underlying network cause:", err.error.error);
+  }
 });
 
 // 3. Logger Middleware
@@ -49,11 +52,15 @@ bot.command("start", async (ctx) => {
   const isValidHttps = rawUrl && rawUrl.startsWith("https://");
 
   if (!isValidHttps) {
-    await ctx.reply(
-      `👋 Welcome to our Store, <b>${ctx.from?.first_name}</b>!\n\n` +
-      `⚠️ Mini App URL is not set or not HTTPS.\n` +
-      `Add your tunnel URL to <code>.env</code>:\n<code>MINI_APP_URL=https://...</code>`,
-      { parse_mode: "HTML" }
+    await ctx.replyWithPhoto(
+      new InputFile(new URL("../public/images/i-socket_simple-banner_825x460.jpg", import.meta.url)),
+      {
+      caption:
+        `👋 Welcome to our Store, <b>${ctx.from?.first_name}</b>!\n\n` +
+        `⚠️ Mini App URL is not set or not HTTPS.\n` +
+        `Add your tunnel URL to <code>.env</code>:\n<code>MINI_APP_URL=https://...</code>`,
+      parse_mode: "HTML",
+      },
     );
     return;
   }
@@ -63,10 +70,12 @@ bot.command("start", async (ctx) => {
     .text("English", "lang:en")
     .text("فارسی", "lang:fa");
 
-  await ctx.reply(
-    `👋 Welcome to our Store, <b>${ctx.from?.first_name}</b>!\n\n` +
-    `Please select your language to continue.`,
+  await ctx.replyWithPhoto(
+    new URL("/images/i-socket_simple-banner_825x460.jpg", rawUrl).toString(),
     {
+      caption:
+        `👋 Welcome to our Store, <b>${ctx.from?.first_name}</b>!\n\n` +
+        `Please select your language to continue.`,
       parse_mode: "HTML",
       reply_markup: keyboard,
     }
