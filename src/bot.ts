@@ -1,5 +1,6 @@
 import "dotenv/config";
 import { readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 import { Bot, BotConfig, Context, InlineKeyboard, InputFile, Keyboard } from "grammy";
 import { HttpsProxyAgent } from "https-proxy-agent";
 import { buildMiniAppUrl } from "./language.js";
@@ -84,9 +85,9 @@ bot.command("start", async (ctx) => {
   const rawUrl = process.env.MINI_APP_URL?.trim();
   const isValidHttps = rawUrl && rawUrl.startsWith("https://");
   const bannerPath = "/images/i-socket_simple-banner_825x460.jpg";
-  const banner = isValidHttps && process.argv.includes("--local-test")
+  const banner = isValidHttps
     ? new URL(bannerPath, rawUrl).toString()
-    : new InputFile(new URL(`../public${bannerPath}`, import.meta.url));
+    : new InputFile(fileURLToPath(new URL(`../public${bannerPath}`, import.meta.url)));
 
   if (!isValidHttps) {
     await ctx.replyWithPhoto(banner, {
@@ -184,9 +185,9 @@ bot.callbackQuery(/^sample_video:(en|fa)$/, async (ctx) => {
   const rawUrl = process.env.MINI_APP_URL?.trim();
   const isValidHttps = rawUrl && rawUrl.startsWith("https://");
   const sampleVideoPath = "/videos/i-socket_introduction_compressed.mp4";
-  const sampleVideo = isValidHttps && process.argv.includes("--local-test")
+  const sampleVideo = isValidHttps
     ? new URL(sampleVideoPath, rawUrl).toString()
-    : new InputFile(new URL(`../public${sampleVideoPath}`, import.meta.url));
+    : new InputFile(fileURLToPath(new URL(`../public${sampleVideoPath}`, import.meta.url)));
 
   await ctx.answerCallbackQuery();
   await ctx.replyWithVideo(sampleVideo, {
