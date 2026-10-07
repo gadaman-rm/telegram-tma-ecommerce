@@ -19,7 +19,7 @@
     },
     "callMe": {
       "en": {
-        "button": "📞 Call me",
+        "button": "📞 Add to call list",
         "adminNotConfiguredAlert": "Shop contact is not configured.",
         "adminNotConfigured": "Phone callbacks are not available right now.",
         "sharePhonePrompt": "Please share your phone number and the shop will call you.",
@@ -30,7 +30,7 @@
         "adminRequest": "Call request from {name} (user ID: {userId}{username})."
       },
       "fa": {
-        "button": "📞 با من تماس بگیرید",
+        "button": "📞در لیست تماس قرار بده",
         "adminNotConfiguredAlert": "اطلاعات تماس فروشگاه تنظیم نشده است.",
         "adminNotConfigured": "در حال حاضر امکان درخواست تماس وجود ندارد.",
         "sharePhonePrompt": "لطفاً شماره تلفن خود را به اشتراک بگذارید تا فروشگاه با شما تماس بگیرد.",
