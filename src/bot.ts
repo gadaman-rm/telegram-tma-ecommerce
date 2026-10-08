@@ -29,6 +29,10 @@ const content = JSON.parse(
       }
     >;
   };
+  seller: {
+    whatsapp: string;
+    message: Record<"en" | "fa", string>;
+  };
 };
 
 // 1. Configure proxy conditionally
@@ -164,6 +168,10 @@ bot.callbackQuery(/lang:(en|fa)/, async (ctx) => {
       `sample_video:${selectedLang}`,
     )
     .row()
+    .url(
+      selectedLang === "en" ? "💬 WhatsApp" : "💬 واتساپ",
+      `https://wa.me/${content.seller.whatsapp.replace(/\D/g, "")}?text=${encodeURIComponent(content.seller.message[selectedLang])}`,
+    )
     .text(content.bot.callMe[selectedLang].button, `call_me:${selectedLang}`);
 
   await ctx.editMessageCaption(
