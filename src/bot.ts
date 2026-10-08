@@ -169,9 +169,10 @@ bot.callbackQuery(/lang:(en|fa)/, async (ctx) => {
     )
     .row()
     .url(
-      selectedLang === "en" ? "💬 WhatsApp" : "💬 واتساپ",
+      selectedLang === "en" ? "💬 Ask in WhatsApp" : "💬 سوال در واتس آپ",
       `https://wa.me/${content.seller.whatsapp.replace(/\D/g, "")}?text=${encodeURIComponent(content.seller.message[selectedLang])}`,
     )
+    .row()
     .text(content.bot.callMe[selectedLang].button, `call_me:${selectedLang}`);
 
   await ctx.editMessageCaption(
