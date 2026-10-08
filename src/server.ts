@@ -17,6 +17,7 @@ const PORT = process.env.PORT || 3000;
 const serverOnly = process.argv.includes("--server-only");
 const webhookPath = "/telegram-webhook";
 const bridgePath = "/telegram-dev-bridge";
+const devBridgeEnabled = process.env.DEV_BRIDGE_ENABLED === "true";
 const httpServer = createServer(app);
 const bridgeServer = new WebSocketServer({ noServer: true, maxPayload: 1_000_000 });
 let bridgeClient: WebSocket | undefined;
@@ -188,8 +189,11 @@ async function run() {
   const webhookUrl = process.env.WEBHOOK_URL?.trim();
   const webhookSecret = process.env.WEBHOOK_SECRET_TOKEN?.trim();
   const bridgeSecret = process.env.DEV_BRIDGE_SECRET?.trim();
-  if (bridgeSecret && !webhookUrl) {
-    throw new Error("DEV_BRIDGE_SECRET can only be used with webhook mode; set WEBHOOK_URL and WEBHOOK_SECRET_TOKEN too.");
+  if (process.env.DEV_BRIDGE_ENABLED && !["true", "false"].includes(process.env.DEV_BRIDGE_ENABLED)) {
+    throw new Error("DEV_BRIDGE_ENABLED must be either true or false.");
+  }
+  if (devBridgeEnabled && !webhookUrl) {
+    throw new Error("DEV_BRIDGE_ENABLED=true requires webhook mode; set WEBHOOK_URL and WEBHOOK_SECRET_TOKEN.");
   }
   if (webhookUrl || webhookSecret) {
     if (!webhookUrl || !webhookSecret) {
@@ -198,7 +202,7 @@ async function run() {
     if (!/^[A-Za-z0-9_-]{1,256}$/.test(webhookSecret)) {
       throw new Error("WEBHOOK_SECRET_TOKEN must be 1-256 characters using only letters, numbers, underscores, and hyphens.");
     }
-    if (bridgeSecret && !/^[A-Za-z0-9_-]{32,256}$/.test(bridgeSecret)) {
+    if (devBridgeEnabled && (!bridgeSecret || !/^[A-Za-z0-9_-]{32,256}$/.test(bridgeSecret))) {
       throw new Error("DEV_BRIDGE_SECRET must be 32-256 characters using only letters, numbers, underscores, and hyphens.");
     }
 
@@ -312,10 +316,12 @@ async function run() {
       }
     });
     await bot.api.setWebhook(webhookUrl, { secret_token: webhookSecret });
-    bridgeEnabled = Boolean(bridgeSecret);
+    bridgeEnabled = devBridgeEnabled;
     console.log(`🪝 Webhook active for @${botUsername ?? "unknown"} at ${parsedWebhookUrl.pathname}`);
-    if (bridgeSecret) {
+    if (bridgeEnabled) {
       console.log(`🔐 Development WebSocket bridge available at ${bridgePath}`);
+    } else {
+      console.log("🔒 Development WebSocket bridge is disabled");
     }
     return;
   }

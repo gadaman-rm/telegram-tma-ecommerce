@@ -1,14 +1,22 @@
 import "dotenv/config";
 import type { Update } from "@grammyjs/types";
+import type { Bot as GrammyBot } from "grammy";
 import { WebSocket } from "ws";
-import { bot } from "./bot.js";
 
 const bridgePath = "/telegram-dev-bridge";
+const devBridgeEnabled = process.env.DEV_BRIDGE_ENABLED === "true";
 const bridgeUrl = process.env.DEV_BRIDGE_URL?.trim();
 const bridgeSecret = process.env.DEV_BRIDGE_SECRET?.trim();
 
+if (process.env.DEV_BRIDGE_ENABLED && !["true", "false"].includes(process.env.DEV_BRIDGE_ENABLED)) {
+  throw new Error("DEV_BRIDGE_ENABLED must be either true or false.");
+}
+if (!devBridgeEnabled) {
+  console.log("🔒 Development bridge client is disabled (set DEV_BRIDGE_ENABLED=true to enable it).");
+  process.exit(0);
+}
 if (!bridgeUrl || !bridgeSecret) {
-  throw new Error("Set DEV_BRIDGE_URL and DEV_BRIDGE_SECRET in your local .env file.");
+  throw new Error("Set DEV_BRIDGE_URL and DEV_BRIDGE_SECRET when DEV_BRIDGE_ENABLED=true.");
 }
 if (!/^[A-Za-z0-9_-]{32,256}$/.test(bridgeSecret)) {
   throw new Error("DEV_BRIDGE_SECRET must be 32-256 characters using only letters, numbers, underscores, and hyphens.");
@@ -27,6 +35,7 @@ if (
 }
 
 const processedUpdateIds = new Set<number>();
+let bot: GrammyBot | undefined;
 let currentSocket: WebSocket | undefined;
 let reconnectTimer: NodeJS.Timeout | undefined;
 let reconnectDelayMs = 1000;
@@ -74,6 +83,7 @@ async function processUpdate(socket: WebSocket, update: Update): Promise<void> {
   }
 
   try {
+    if (!bot) throw new Error("Local bot has not been initialized");
     await bot.handleUpdate(update);
     rememberProcessedUpdate(updateId);
     sendAcknowledgement(socket, updateId, true);
@@ -84,7 +94,9 @@ async function processUpdate(socket: WebSocket, update: Update): Promise<void> {
 }
 
 async function start(): Promise<void> {
-  await bot.init();
+  const localBot = (await import("./bot.js")).bot;
+  bot = localBot;
+  await localBot.init();
   console.log("🧪 Local bot handlers are ready; connecting to the Ubuntu webhook bridge...");
 
   function connect(): void {
