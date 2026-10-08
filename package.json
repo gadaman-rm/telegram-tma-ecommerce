@@ -5,6 +5,7 @@
     "scripts": {
         "dev": "tsx watch src/server.ts",
         "dev:local": "tsx watch src/server.ts --local-test",
+        "dev:bridge": "tsx watch src/dev-bridge-client.ts",
         "dev:server": "tsx watch src/server.ts --server-only",
         "build": "tsc",
         "start": "node dist/server.js",
@@ -14,11 +15,14 @@
         "dotenv": "^17.4.2",
         "express": "^5.2.1",
         "grammy": "^1.46.0",
-        "https-proxy-agent": "^9.1.0"
+        "https-proxy-agent": "^9.1.0",
+        "ws": "^8.22.0"
     },
     "devDependencies": {
+        "@grammyjs/types": "^5.0.0",
         "@types/express": "^5.0.6",
         "@types/node": "^26.6.0",
+        "@types/ws": "^8.18.2",
         "tsx": "^4.23.13",
         "typescript": "^7.0.2"
     }
